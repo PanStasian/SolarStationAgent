@@ -1,0 +1,33 @@
+﻿<Window x:Class="SolarStation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SolarStation"
+        xmlns:DV="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+    xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <ComboBox Name="SolarPanelListCB" SelectedIndex="0"  SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding}" SelectedValuePath="Id_panel" DisplayMemberPath="NamePanel" x:FieldModifier="public" HorizontalAlignment="Left" Margin="151,13,0,0" VerticalAlignment="Top" Width="156" RenderTransformOrigin="0.727,-0.076" />
+        <Label Content="Вибрати сонячну панель" HorizontalAlignment="Left" Margin="3,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="V" HorizontalAlignment="Left" Height="23" Margin="151,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="52"/>
+        <TextBox x:Name="PanelAmount" Text="{Binding ElementName=PanelAmountSl, Path=Value, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="754,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="28"/>
+        <Label Content="Кількість панелей:" HorizontalAlignment="Left" Margin="637,8,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.406,0.531"/>
+        <Label Content="Номінальна потужність:" HorizontalAlignment="Left" Margin="8,46,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.406,0.531"/>
+        <Label Content="Вт" HorizontalAlignment="Left" Margin="206,45,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.406,0.531"/>
+        <Button Name="InfBtn" Content="Характеристики" HorizontalAlignment="Left" Margin="317,8,0,0" VerticalAlignment="Top" Width="102" Click="InfBtn_Click" Height="30"/>
+        <DVC:Chart Name="Chart" HorizontalAlignment="Left" Margin="6,160,0,0" VerticalAlignment="Top" Width="780" Height="230">
+            <DVC:Chart.Series>
+                <DVC:LineSeries 
+                IndependentValueBinding="{Binding Path=Key}"
+                DependentValueBinding="{Binding Path=Value}">
+            </DVC:LineSeries>
+            </DVC:Chart.Series>
+        </DVC:Chart>
+        <DatePicker Name="DatePick" HorizontalAlignment="Left" Margin="427,104,0,0" VerticalAlignment="Top"/>
+        <Button Name="CalculateBtn" Content="Button" HorizontalAlignment="Left" Margin="572,117,0,0" VerticalAlignment="Top" Width="75" Click="CalculateBtn_Click"/>
+        <Slider Name="PanelAmountSl" Minimum="1" Maximum="50" SelectionStart="1" Height="30"  IsSnapToTickEnabled="True"  TickFrequency="1" TickPlacement="BottomRight" Margin="434,9,156.6,381" BorderBrush="{x:Null}" Foreground="#FF07760C" Background="{x:Null}" Cursor="Hand" />
+        <CheckBox Name="isTrackSun" Unchecked="checkBox_Unchecked" Content="Наявність сонячного трекера" HorizontalAlignment="Left" Margin="442,43,0,0" VerticalAlignment="Top"/>
+    </Grid>
+</Window>
