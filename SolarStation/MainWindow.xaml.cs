@@ -39,8 +39,8 @@ namespace SolarStation
             SolarPanelListCB.ItemsSource = sp.Solar_Panels.ToList();
             PanelAmountSl.ValueChanged += Slider_ValueChanged;
             PanelAmountSl.Value = 10;
-            isTrackSun.Checked += checkBox_Checked;
-            isTrackSun.Unchecked += checkBox_Unchecked;
+            isTrackSun.Checked += CheckBox_Checked;
+            isTrackSun.Unchecked += CheckBox_Unchecked;
             //FillChart();
         }
 
@@ -69,6 +69,12 @@ namespace SolarStation
         
         public void FillChart()
         {
+            Style styleLegend = new Style { TargetType = typeof(Control) };
+            styleLegend.Setters.Add(new Setter(Control.WidthProperty, 0d));
+            styleLegend.Setters.Add(new Setter(Control.HeightProperty, 0d));
+            //styleLegend.Setters.Add(new Setter(Control.VisibilityProperty, Hide));
+            Chart.LegendStyle = styleLegend;
+
             List<KeyValuePair<string, double>> KeyValue = new List<KeyValuePair<string, double>>();
             DateTime date = DatePick.SelectedDate.Value;
 
@@ -124,15 +130,25 @@ namespace SolarStation
             FillChart();
         }
 
-        private void checkBox_Unchecked(object sender, RoutedEventArgs e)
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             FillChart();
         }
-        private void checkBox_Checked(object sender, RoutedEventArgs e)
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             FillChart();
         }
 
-        
+        private void ButtonOpenMenu_Click(object sender, RoutedEventArgs e)
+        {
+            ButtonOpenMenu.Visibility = Visibility.Collapsed;
+            ButtonCloseMenu.Visibility = Visibility.Visible;
+        }
+
+        private void ButtonCloseMenu_Click(object sender, RoutedEventArgs e)
+        {
+            ButtonOpenMenu.Visibility = Visibility.Visible;
+            ButtonCloseMenu.Visibility = Visibility.Collapsed;
+        }
     }
 }

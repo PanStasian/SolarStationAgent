@@ -1,33 +1,101 @@
-﻿<Window x:Class="SolarStation.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SolarStation"
         xmlns:DV="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
-    xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+        xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+        xmlns:Primitives="clr-namespace:System.Windows.Controls.DataVisualization.Charting.Primitives;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+        x:Class="SolarStation.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="MainWindow" Height="598.2" Width="1050.8" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Storyboard x:Key="MenuOpen">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="60"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="200"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="MenuClose">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="200"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="60"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonOpenMenu">
+            <BeginStoryboard Storyboard="{StaticResource MenuOpen}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonCloseMenu">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}"/>
+        </EventTrigger>
+    </Window.Triggers>
+    
     <Grid>
-        <ComboBox Name="SolarPanelListCB" SelectedIndex="0"  SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding}" SelectedValuePath="Id_panel" DisplayMemberPath="NamePanel" x:FieldModifier="public" HorizontalAlignment="Left" Margin="151,13,0,0" VerticalAlignment="Top" Width="156" RenderTransformOrigin="0.727,-0.076" />
-        <Label Content="Вибрати сонячну панель" HorizontalAlignment="Left" Margin="3,10,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="V" HorizontalAlignment="Left" Height="23" Margin="151,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="52"/>
-        <TextBox x:Name="PanelAmount" Text="{Binding ElementName=PanelAmountSl, Path=Value, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="754,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="28"/>
-        <Label Content="Кількість панелей:" HorizontalAlignment="Left" Margin="637,8,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.406,0.531"/>
-        <Label Content="Номінальна потужність:" HorizontalAlignment="Left" Margin="8,46,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.406,0.531"/>
-        <Label Content="Вт" HorizontalAlignment="Left" Margin="206,45,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.406,0.531"/>
-        <Button Name="InfBtn" Content="Характеристики" HorizontalAlignment="Left" Margin="317,8,0,0" VerticalAlignment="Top" Width="102" Click="InfBtn_Click" Height="30"/>
-        <DVC:Chart Name="Chart" HorizontalAlignment="Left" Margin="6,160,0,0" VerticalAlignment="Top" Width="780" Height="230">
-            <DVC:Chart.Series>
-                <DVC:LineSeries 
-                IndependentValueBinding="{Binding Path=Key}"
-                DependentValueBinding="{Binding Path=Value}">
+        <ComboBox x:Name="SolarPanelListCB" SelectedIndex="0"  SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding}" SelectedValuePath="Id_panel" DisplayMemberPath="NamePanel" x:FieldModifier="public" HorizontalAlignment="Left" Margin="403,63,0,0" VerticalAlignment="Top" Width="156" RenderTransformOrigin="0.727,-0.076" />
+        <Label Content="Вибрати сонячну панель" HorizontalAlignment="Left" Margin="255,60,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="V" HorizontalAlignment="Left" Height="23" Margin="565,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"/>
+        <TextBox x:Name="PanelAmount" Text="{Binding Value, ElementName=PanelAmountSl, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="22" Margin="964,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="22"/>
+        <Label Content="Кількість панелей:" HorizontalAlignment="Left" Margin="646,61,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.406,0.531"/>
+        <Label Content="кВт" HorizontalAlignment="Left" Margin="618,62,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.406,0.531"/>
+        <DVC:Chart x:Name="Chart" HorizontalAlignment="Left" Margin="1,240,-69.2,-11.2" VerticalAlignment="Top" Width="1113" Height="340" BorderThickness="0" ClipToBounds="True" SnapsToDevicePixels="False">
+            <DVC:LineSeries Title=""
+                IndependentValueBinding="{Binding Key}"
+                DependentValueBinding="{Binding Value}" >
+                <DVC:LineSeries.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                        <GradientStop Color="#FFB9D6F7"/>
+                        <GradientStop Color="#FF284B70" Offset="1"/>
+                    </LinearGradientBrush>
+                </DVC:LineSeries.Background>
             </DVC:LineSeries>
-            </DVC:Chart.Series>
         </DVC:Chart>
-        <DatePicker Name="DatePick" HorizontalAlignment="Left" Margin="427,104,0,0" VerticalAlignment="Top"/>
-        <Button Name="CalculateBtn" Content="Button" HorizontalAlignment="Left" Margin="572,117,0,0" VerticalAlignment="Top" Width="75" Click="CalculateBtn_Click"/>
-        <Slider Name="PanelAmountSl" Minimum="1" Maximum="50" SelectionStart="1" Height="30"  IsSnapToTickEnabled="True"  TickFrequency="1" TickPlacement="BottomRight" Margin="434,9,156.6,381" BorderBrush="{x:Null}" Foreground="#FF07760C" Background="{x:Null}" Cursor="Hand" />
-        <CheckBox Name="isTrackSun" Unchecked="checkBox_Unchecked" Content="Наявність сонячного трекера" HorizontalAlignment="Left" Margin="442,43,0,0" VerticalAlignment="Top"/>
+        <DatePicker x:Name="DatePick" HorizontalAlignment="Left" Margin="380,97,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="CalculateBtn" Content="Button" HorizontalAlignment="Left" Margin="409,131,0,0" VerticalAlignment="Top" Width="75" Click="CalculateBtn_Click"/>
+        <Slider x:Name="PanelAmountSl" Minimum="1" Maximum="50" SelectionStart="1" Height="30"  IsSnapToTickEnabled="True"  TickFrequency="1" TickPlacement="BottomRight" Margin="754,62,84.8,476.8" BorderBrush="{x:Null}" Foreground="#FF07760C" Background="{x:Null}" Cursor="Hand" />
+        <CheckBox x:Name="isTrackSun" Unchecked="CheckBox_Unchecked" Content="Наявність сонячного трекера" HorizontalAlignment="Left" Margin="522,156,0,0" VerticalAlignment="Top"/>
+        <DockPanel HorizontalAlignment="Left" Height="280" LastChildFill="False" VerticalAlignment="Top" Width="111" Margin="804,105,0,0">
+            <DockPanel.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF0D0E79" Offset="0"/>
+                    <GradientStop Color="#FF898DE2" Offset="1"/>
+                </LinearGradientBrush>
+            </DockPanel.Background>
+            <Button x:Name="InfBtn" Content="Характеристики" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Click="InfBtn_Click" Height="30" DockPanel.Dock="Top"/>
+            <Button x:Name="PickDateBtn" Content="Вибрати дату" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" DockPanel.Dock="Top"/>
+            <Button x:Name="CompareBtn" Content="Порівняти сонячні панелі" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" DockPanel.Dock="Top"/>
+            <Button x:Name="PredictionBtn" Content="Спрогнозувати" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" DockPanel.Dock="Top"/>
+        </DockPanel>
+
+        <Grid Height="55" VerticalAlignment="Top" Background="#FF5658D7">
+            <StackPanel VerticalAlignment="Center">
+            <materialDesign:PopupBox HorizontalAlignment="Right" Margin="10" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid x:Name="GridMenu" Width="40" HorizontalAlignment="Left" Background="#FF5658D7">
+            <StackPanel>
+                <Grid Height="150" Background="White">
+                    <Button x:Name="ButtonCloseMenu" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed" Click="ButtonCloseMenu_Click">
+                        <materialDesign:PackIcon Kind="ArrowRight" Foreground="#FF5658D7" Height="40" Width="50"/>
+                    </Button>
+                    <Button x:Name="ButtonOpenMenu" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Click="ButtonOpenMenu_Click">
+                        <materialDesign:PackIcon Kind="Menu" Foreground="#FF5658D7" Height="40" Width="50"/>
+                    </Button>
+                </Grid>
+                <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled"  Foreground="White">
+                    <ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="ViewDashboard" Width="25" Height="25" VerticalAlignment="Center"/>
+                            <TextBlock Text="Home" VerticalAlignment="Center" Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
+                   
+                </ListView>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
