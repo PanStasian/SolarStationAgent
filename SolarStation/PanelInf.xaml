@@ -4,10 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SolarStation"
+        xmlns:Primitives="clr-namespace:System.Windows.Controls.DataVisualization.Charting.Primitives;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="PanelInf" Height="332.4" Width="588.8">
     <Grid>
-
         <TextBox Name="NominalPowTxt" HorizontalAlignment="Left" Height="23" Margin="274,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60"/>
         <Label Content="Номінальна потужність" HorizontalAlignment="Left" Margin="131,70,0,0" VerticalAlignment="Top"/>
 

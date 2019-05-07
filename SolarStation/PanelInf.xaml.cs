@@ -34,7 +34,7 @@ namespace SolarStation
             //PanelNameTxt.Text = item.NamePanel.ToString();
 
             Header.Content= item.NamePanel.ToString();
-
+            
             NominalPowTxt.Text = item.NominalPower_W.ToString();
 
             RatedVoltageTxt.Text = item.RatedVoltage_V.ToString();

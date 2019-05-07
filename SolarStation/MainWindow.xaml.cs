@@ -25,17 +25,20 @@ namespace SolarStation
     {
         int panelAmount;
         Solar_Panels SolarPanelSelected;
+        Solar_Panels SolarPanelSelectedInf;
         //Chart dynamicChart = new Chart();
         //LineSeries lineSeries = new LineSeries();
         SolarPanelEntities sp = new SolarPanelEntities();
         public List<Solar_Panels> SolPal { get; set; }
+        public List<Solar_Panels> SolPalInf { get; set; }
         //public List<SolarInsalation> SolIns { get; set; }
-        
+
         public MainWindow()
         {
             InitializeComponent();
             DatePick.SelectedDate = DateTime.Now;
             BindCB();
+            BindCBInfPanel();
             SolarPanelListCB.ItemsSource = sp.Solar_Panels.ToList();
             PanelAmountSl.ValueChanged += Slider_ValueChanged;
             PanelAmountSl.Value = 10;
@@ -51,7 +54,7 @@ namespace SolarStation
             SolPal = item;
             DataContext = SolPal;
         }
-
+        
         public void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SolarPanelSelected = SolarPanelListCB.SelectedItem as Solar_Panels;
@@ -60,11 +63,23 @@ namespace SolarStation
             FillChart();
         }
 
-        public void InfBtn_Click(object sender, RoutedEventArgs e)
+        private void BindCBInfPanel()
         {
-            PanelInf infPan = new PanelInf();
-            infPan.Show();
+            var itemInf = sp.Solar_Panels.ToList();
+            SolPalInf = itemInf;
+            DataContext = SolPalInf;
         }
+
+        public void ComboBox_SelectionInfChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SolarPanelSelectedInf = SolarPanelListInfCB.SelectedItem as Solar_Panels;
+            double kWh = (double)SolarPanelSelected.NominalPower_W / 1000;
+            ShowInfo();
+            //V.Text = kWh.ToString();
+            //FillChart();
+        }
+
+       
 
         
         public void FillChart()
@@ -149,6 +164,109 @@ namespace SolarStation
         {
             ButtonOpenMenu.Visibility = Visibility.Visible;
             ButtonCloseMenu.Visibility = Visibility.Collapsed;
+        }
+
+        public void ShowInfo()
+        {
+            Solar_Panels itemInf = SolarPanelListInfCB.SelectedItem as Solar_Panels;
+            //PanelNameTxt.Text = item.NamePanel.ToString();
+
+            Header.Content = itemInf.NamePanel.ToString();
+
+            NominalPowTxt.Text = itemInf.NominalPower_W.ToString();
+
+            RatedVoltageTxt.Text = itemInf.RatedVoltage_V.ToString();
+
+            RatedCurrentTxt.Text = itemInf.RatedCurrent_A.ToString();
+
+            OpenCircuitVoltageTxt.Text = itemInf.OpenCircuitVoltage_V.ToString();
+
+            MaxSystemVoltageTxt.Text = itemInf.MaxSystemVoltage_V.ToString();
+
+            PanelEfficiencyTxt.Text = itemInf.PanelEfficiency.ToString();
+
+            SolarCellsTxt.Text = itemInf.SolarCells.ToString();
+
+            ManufacturerTxt.Text = itemInf.Manufacturer.ToString();
+
+            PriceTxt.Text = itemInf.Price__.ToString();
+
+            MinTempTxt.Text = itemInf.MinTemperature.ToString();
+
+            MaxTempTxt.Text = itemInf.MaxTemperature.ToString();
+        }
+
+        private void Tab_Click(object sender, RoutedEventArgs e)
+        {
+            int index = int.Parse(((Button)e.Source).Uid);
+            switch (index)
+            {
+                case 0:
+                    infGrid.Visibility = Visibility.Collapsed;
+                    infGrid.IsEnabled = false;
+                    dateGrid.Visibility = Visibility.Collapsed;
+                    dateGrid.IsEnabled = false;
+                    compareGrid.Visibility = Visibility.Collapsed;
+                    compareGrid.IsEnabled = false;
+                    predictGrid.Visibility = Visibility.Collapsed;
+                    predictGrid.IsEnabled = false;
+
+                    mainGrid.Visibility = Visibility.Visible;
+                    mainGrid.IsEnabled = true;
+                    break;
+                case 1:
+                    mainGrid.Visibility = Visibility.Collapsed;
+                    mainGrid.IsEnabled = false;
+                    dateGrid.Visibility = Visibility.Collapsed;
+                    dateGrid.IsEnabled = false;
+                    compareGrid.Visibility = Visibility.Collapsed;
+                    compareGrid.IsEnabled = false;
+                    predictGrid.Visibility = Visibility.Collapsed;
+                    predictGrid.IsEnabled = false;
+
+                    infGrid.Visibility = Visibility.Visible;
+                    infGrid.IsEnabled = true;
+                    break;
+                case 2:
+                    mainGrid.Visibility = Visibility.Collapsed;
+                    mainGrid.IsEnabled = false;
+                    infGrid.Visibility = Visibility.Collapsed;
+                    infGrid.IsEnabled = false;
+                    compareGrid.Visibility = Visibility.Collapsed;
+                    compareGrid.IsEnabled = false;
+                    predictGrid.Visibility = Visibility.Collapsed;
+                    predictGrid.IsEnabled = false;
+
+                    dateGrid.Visibility = Visibility.Visible;
+                    dateGrid.IsEnabled = true;
+                    break;
+                case 3:
+                    mainGrid.Visibility = Visibility.Collapsed;
+                    mainGrid.IsEnabled = false;
+                    infGrid.Visibility = Visibility.Collapsed;
+                    infGrid.IsEnabled = false;
+                    dateGrid.Visibility = Visibility.Collapsed;
+                    dateGrid.IsEnabled = false;
+                    predictGrid.Visibility = Visibility.Collapsed;
+                    predictGrid.IsEnabled = false;
+
+                    compareGrid.Visibility = Visibility.Visible;
+                    compareGrid.IsEnabled = true;
+                    break;
+                case 4:
+                    mainGrid.Visibility = Visibility.Collapsed;
+                    mainGrid.IsEnabled = false;
+                    infGrid.Visibility = Visibility.Collapsed;
+                    infGrid.IsEnabled = false;
+                    dateGrid.Visibility = Visibility.Collapsed;
+                    dateGrid.IsEnabled = false;
+                    compareGrid.Visibility = Visibility.Collapsed;
+                    compareGrid.IsEnabled = false;
+
+                    predictGrid.Visibility = Visibility.Visible;
+                    predictGrid.IsEnabled = true;
+                    break;
+            }
         }
     }
 }
