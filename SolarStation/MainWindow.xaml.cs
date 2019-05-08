@@ -26,12 +26,9 @@ namespace SolarStation
         int panelAmount;
         Solar_Panels SolarPanelSelected;
         Solar_Panels SolarPanelSelectedInf;
-        //Chart dynamicChart = new Chart();
-        //LineSeries lineSeries = new LineSeries();
         SolarPanelEntities sp = new SolarPanelEntities();
         public List<Solar_Panels> SolPal { get; set; }
         public List<Solar_Panels> SolPalInf { get; set; }
-        //public List<SolarInsalation> SolIns { get; set; }
 
         public MainWindow()
         {
@@ -47,7 +44,7 @@ namespace SolarStation
             //FillChart();
         }
 
-
+        #region Main
         private void BindCB()
         {
             var item = sp.Solar_Panels.ToList();
@@ -63,46 +60,31 @@ namespace SolarStation
             FillChart();
         }
 
-        private void BindCBInfPanel()
-        {
-            var itemInf = sp.Solar_Panels.ToList();
-            SolPalInf = itemInf;
-            DataContext = SolPalInf;
-        }
-
-        public void ComboBox_SelectionInfChanged(object sender, SelectionChangedEventArgs e)
-        {
-            SolarPanelSelectedInf = SolarPanelListInfCB.SelectedItem as Solar_Panels;
-            double kWh = (double)SolarPanelSelected.NominalPower_W / 1000;
-            ShowInfo();
-            //V.Text = kWh.ToString();
-            //FillChart();
-        }
-
-       
-
         
+
         public void FillChart()
         {
             Style styleLegend = new Style { TargetType = typeof(Control) };
             styleLegend.Setters.Add(new Setter(Control.WidthProperty, 0d));
             styleLegend.Setters.Add(new Setter(Control.HeightProperty, 0d));
-            //styleLegend.Setters.Add(new Setter(Control.VisibilityProperty, Hide));
             Chart.LegendStyle = styleLegend;
 
             List<KeyValuePair<string, double>> KeyValue = new List<KeyValuePair<string, double>>();
             DateTime date = DatePick.SelectedDate.Value;
+            double sum = 0;
+
 
             if (date.Year != 2019)
             {
                 int years = 2019 - date.Year;
-                date=date.AddYears(years);
+                date = date.AddYears(years);
             }
-            if (isTrackSun.IsChecked==true)
+            if (isTrackSun.IsChecked == true)
             {
                 foreach (var time in sp.SolarInsalations.Where(x => x.Date == date).ToList())
                 {
                     double power = SolarPanelSelected.CalculatePower((int)time.ETRN, panelAmount);
+                    sum += power;
                     KeyValue.Add(new KeyValuePair<string, double>(time.Time, power));
                 }
                 ((LineSeries)Chart.Series[0]).ItemsSource = KeyValue;
@@ -112,11 +94,13 @@ namespace SolarStation
                 foreach (var time in sp.SolarInsalations.Where(x => x.Date == date).ToList())
                 {
                     double power = SolarPanelSelected.CalculatePower((int)time.ETR, panelAmount);
+                    sum += power;
                     KeyValue.Add(new KeyValuePair<string, double>(time.Time, power));
                 }
                 ((LineSeries)Chart.Series[0]).ItemsSource = KeyValue;
             }
-            
+            day.Text = sum.ToString();
+
             //foreach(var time in sp.SolarInsalations.Where(x => x.Date == date).ToList())
             //{
             //    if(isTrackSun.IsChecked == true)
@@ -140,10 +124,6 @@ namespace SolarStation
             this.panelAmount = (int)PanelAmountSl.Value;
             FillChart();
         }
-        private void CalculateBtn_Click(object sender, RoutedEventArgs e)
-        {
-            FillChart();
-        }
 
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
@@ -154,16 +134,28 @@ namespace SolarStation
             FillChart();
         }
 
-        private void ButtonOpenMenu_Click(object sender, RoutedEventArgs e)
+        private void ReportBtn_Click(object sender, RoutedEventArgs e)
         {
-            ButtonOpenMenu.Visibility = Visibility.Collapsed;
-            ButtonCloseMenu.Visibility = Visibility.Visible;
+            Report reportWindow = new Report();
+            reportWindow.Show();
+        }
+        #endregion
+
+        #region Information Tab
+        private void BindCBInfPanel()
+        {
+            var itemInf = sp.Solar_Panels.ToList();
+            SolPalInf = itemInf;
+            DataContext = SolPalInf;
         }
 
-        private void ButtonCloseMenu_Click(object sender, RoutedEventArgs e)
+        public void ComboBox_SelectionInfChanged(object sender, SelectionChangedEventArgs e)
         {
-            ButtonOpenMenu.Visibility = Visibility.Visible;
-            ButtonCloseMenu.Visibility = Visibility.Collapsed;
+            SolarPanelSelectedInf = SolarPanelListInfCB.SelectedItem as Solar_Panels;
+            double kWh = (double)SolarPanelSelected.NominalPower_W / 1000;
+            ShowInfo();
+            //V.Text = kWh.ToString();
+            //FillChart();
         }
 
         public void ShowInfo()
@@ -195,7 +187,23 @@ namespace SolarStation
 
             MaxTempTxt.Text = itemInf.MaxTemperature.ToString();
         }
+        #endregion
 
+
+
+
+        private void CalculateBtn_Click(object sender, RoutedEventArgs e)
+        {
+            FillChart();
+        }
+
+        
+
+        
+
+        
+
+        #region Tab Navigation
         private void Tab_Click(object sender, RoutedEventArgs e)
         {
             int index = int.Parse(((Button)e.Source).Uid);
@@ -204,8 +212,6 @@ namespace SolarStation
                 case 0:
                     infGrid.Visibility = Visibility.Collapsed;
                     infGrid.IsEnabled = false;
-                    dateGrid.Visibility = Visibility.Collapsed;
-                    dateGrid.IsEnabled = false;
                     compareGrid.Visibility = Visibility.Collapsed;
                     compareGrid.IsEnabled = false;
                     predictGrid.Visibility = Visibility.Collapsed;
@@ -217,8 +223,6 @@ namespace SolarStation
                 case 1:
                     mainGrid.Visibility = Visibility.Collapsed;
                     mainGrid.IsEnabled = false;
-                    dateGrid.Visibility = Visibility.Collapsed;
-                    dateGrid.IsEnabled = false;
                     compareGrid.Visibility = Visibility.Collapsed;
                     compareGrid.IsEnabled = false;
                     predictGrid.Visibility = Visibility.Collapsed;
@@ -232,41 +236,40 @@ namespace SolarStation
                     mainGrid.IsEnabled = false;
                     infGrid.Visibility = Visibility.Collapsed;
                     infGrid.IsEnabled = false;
-                    compareGrid.Visibility = Visibility.Collapsed;
-                    compareGrid.IsEnabled = false;
-                    predictGrid.Visibility = Visibility.Collapsed;
-                    predictGrid.IsEnabled = false;
-
-                    dateGrid.Visibility = Visibility.Visible;
-                    dateGrid.IsEnabled = true;
-                    break;
-                case 3:
-                    mainGrid.Visibility = Visibility.Collapsed;
-                    mainGrid.IsEnabled = false;
-                    infGrid.Visibility = Visibility.Collapsed;
-                    infGrid.IsEnabled = false;
-                    dateGrid.Visibility = Visibility.Collapsed;
-                    dateGrid.IsEnabled = false;
                     predictGrid.Visibility = Visibility.Collapsed;
                     predictGrid.IsEnabled = false;
 
                     compareGrid.Visibility = Visibility.Visible;
                     compareGrid.IsEnabled = true;
                     break;
-                case 4:
+                case 3:
                     mainGrid.Visibility = Visibility.Collapsed;
                     mainGrid.IsEnabled = false;
                     infGrid.Visibility = Visibility.Collapsed;
                     infGrid.IsEnabled = false;
-                    dateGrid.Visibility = Visibility.Collapsed;
-                    dateGrid.IsEnabled = false;
                     compareGrid.Visibility = Visibility.Collapsed;
                     compareGrid.IsEnabled = false;
 
                     predictGrid.Visibility = Visibility.Visible;
                     predictGrid.IsEnabled = true;
                     break;
+                
             }
         }
+        private void ButtonOpenMenu_Click(object sender, RoutedEventArgs e)
+        {
+            ButtonOpenMenu.Visibility = Visibility.Collapsed;
+            ButtonCloseMenu.Visibility = Visibility.Visible;
+        }
+
+        private void ButtonCloseMenu_Click(object sender, RoutedEventArgs e)
+        {
+            ButtonOpenMenu.Visibility = Visibility.Visible;
+            ButtonCloseMenu.Visibility = Visibility.Collapsed;
+        }
+
+        #endregion
+
+        
     }
 }

@@ -69,20 +69,14 @@
                         </ListViewItem>
                         <ListViewItem Height="60">
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="DateRange" Width="30" Height="30" Margin="5" VerticalAlignment="Center"/>
-                                <Button Uid="2" x:Name="DateBtn" Content="Вибрати дату" VerticalAlignment="Center" Click="Tab_Click" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="13" FontWeight="Normal"/>
-                            </StackPanel>
-                        </ListViewItem>
-                        <ListViewItem Height="60">
-                            <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Compare" Width="30" Height="30" Margin="5" VerticalAlignment="Center"/>
-                                <Button Uid="3" x:Name="CompareBtn" Content="Порівняти панелі" VerticalAlignment="Center" Click="Tab_Click" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="13" FontWeight="Normal"/>
+                                <Button Uid="2" x:Name="CompareBtn" Content="Порівняти панелі" VerticalAlignment="Center" Click="Tab_Click" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="13" FontWeight="Normal"/>
                             </StackPanel>
                         </ListViewItem>
                         <ListViewItem Height="60">
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="CalculatorVariant" Width="30" Height="30" Margin="5" VerticalAlignment="Center"/>
-                                <Button Uid="4" x:Name="PredictBtn" Content="Спрогнозувати" VerticalAlignment="Center" Click="Tab_Click" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="13" FontWeight="Normal"/>
+                                <materialDesign:PackIcon Kind="DateRange" Width="30" Height="30" Margin="5" VerticalAlignment="Center"/>
+                                <Button Uid="3" x:Name="PredictBtn" Content="Спрогнозувати" VerticalAlignment="Center" Click="Tab_Click" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="13" FontWeight="Normal"/>
                             </StackPanel>
                         </ListViewItem>
 
@@ -91,13 +85,31 @@
             </Grid>
         </Grid>
 
-        <Grid x:Name="mainGrid" Visibility="Collapsed" IsEnabled="True">
-            <ComboBox x:Name="SolarPanelListCB" SelectedIndex="0"  SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding}" SelectedValuePath="Id_panel" DisplayMemberPath="NamePanel" x:FieldModifier="public" HorizontalAlignment="Left" Margin="403,63,0,0" VerticalAlignment="Top" Width="156" RenderTransformOrigin="0.727,-0.076" />
-            <Label Content="Вибрати сонячну панель" HorizontalAlignment="Left" Margin="255,60,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="V" HorizontalAlignment="Left" Height="23" Margin="565,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"/>
-            <TextBox x:Name="PanelAmount" Text="{Binding Value, ElementName=PanelAmountSl, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="22" Margin="1005,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="22"/>
-            <Label Content="Кількість панелей:" HorizontalAlignment="Left" Margin="646,61,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.406,0.531"/>
-            <Label Content="кВт" HorizontalAlignment="Left" Margin="618,62,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.406,0.531"/>
+        <Grid x:Name="mainGrid" Visibility="Visible" IsEnabled="True">
+            <ListView Margin="60,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListViewItem Height="50">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="FilterList" Foreground="#FF5658D7" Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                        <TextBlock Text="Вибрана сонячна панель:" Margin="5" FontSize="15"/>
+                        <ComboBox x:Name="SolarPanelListCB" FontSize="15" SelectedIndex="0" Width="250"  SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding}" SelectedValuePath="Id_panel" DisplayMemberPath="NamePanel" x:FieldModifier="public"  />
+                        <TextBlock x:Name="V" FontSize="15" Margin="5"/>
+                        <TextBlock Text="кВт" FontSize="15" Margin="5"/>
+                    </StackPanel>
+                </ListViewItem>
+            </ListView>
+
+            <ListView HorizontalAlignment="Right" Margin="0 120 10 0" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
+                <ListViewItem Height="50">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Кількість панелей:" FontSize="15"/>
+                        <TextBlock x:Name="PanelAmount" FontSize="15" Text="{Binding Value, ElementName=PanelAmountSl, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Slider x:Name="PanelAmountSl" FontSize="15" Margin="20 0 0 0" Width="300" Minimum="1" Maximum="50" SelectionStart="1" IsSnapToTickEnabled="True"  TickFrequency="1" TickPlacement="BottomRight" BorderBrush="{x:Null}" Foreground="#FF07760C" Background="{x:Null}" Cursor="Hand"  />
+                    </StackPanel>
+                </ListViewItem>
+            </ListView>
+
+            <Button x:Name="ReportBtn" Width="150" HorizontalAlignment="Center" Content="Скласти звіт" Click="ReportBtn_Click" Margin="750,203,173.6,335.4"/>
+            <TextBlock x:Name="day" Margin="375,205,403.6,300.4"></TextBlock>
             <DVC:Chart x:Name="Chart" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="1005" Height="340" BorderThickness="0" BorderBrush="{x:Null}" ClipToBounds="True" SnapsToDevicePixels="False" Margin="60,0,0,0.4" >
                 <DVC:LineSeries Title=""
                 IndependentValueBinding="{Binding Key}"
@@ -112,14 +124,11 @@
             </DVC:Chart>
             <DatePicker x:Name="DatePick" HorizontalAlignment="Left" Margin="380,97,0,0" VerticalAlignment="Top"/>
             <Button x:Name="CalculateBtn" Content="Button" HorizontalAlignment="Left" Margin="409,131,0,0" VerticalAlignment="Top" Width="75" Click="CalculateBtn_Click"/>
-            <Slider x:Name="PanelAmountSl" Minimum="1" Maximum="50" SelectionStart="1" IsSnapToTickEnabled="True"  TickFrequency="1" TickPlacement="BottomRight" Margin="720,105,28.6,370.4" BorderBrush="{x:Null}" Foreground="#FF07760C" Background="{x:Null}" Cursor="Hand" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,50,0,0" />
             <CheckBox x:Name="isTrackSun" Unchecked="CheckBox_Unchecked" Content="Наявність сонячного трекера" HorizontalAlignment="Left" Margin="522,156,0,0" VerticalAlignment="Top"/>
         </Grid>
         <Grid x:Name="infGrid" Visibility="Collapsed" IsEnabled="False">
             <ComboBox x:Name="SolarPanelListInfCB" SelectedIndex="0"  SelectionChanged="ComboBox_SelectionInfChanged" ItemsSource="{Binding}" SelectedValuePath="Id_panel" DisplayMemberPath="NamePanel" x:FieldModifier="public" HorizontalAlignment="Left" Margin="272,107,0,0" VerticalAlignment="Top" Width="156" RenderTransformOrigin="0.727,-0.076" />
             <Label Content="Вибрати сонячну панель" HorizontalAlignment="Left" Margin="124,104,0,0" VerticalAlignment="Top"/>
-
-
 
             <TextBox Name="NominalPowTxt" HorizontalAlignment="Left" Height="23" Margin="386,335,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60"/>
             <Label Content="Номінальна потужність" HorizontalAlignment="Left" Margin="243,335,0,0" VerticalAlignment="Top"/>
@@ -154,23 +163,6 @@
             <TextBox x:Name="MaxTempTxt" HorizontalAlignment="Left" Height="23" Margin="616,517,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="60"/>
             <Label Content="Максимальна температура" HorizontalAlignment="Left" Margin="460,515,0,0" VerticalAlignment="Top"/>
             <Label Name="Header" Margin="486,99,38.6,0" VerticalAlignment="Top" FontFamily="Lucida Calligraphy" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Height="46" Width="549"/>
-        </Grid>
-        <Grid x:Name="dateGrid" Visibility="Visible" IsEnabled="True">
-            <DVC:Chart x:Name="ChartDate" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="1005" Height="340" BorderThickness="0" BorderBrush="{x:Null}" ClipToBounds="True" SnapsToDevicePixels="False" Margin="60,0,0,0.4" >
-                <DVC:LineSeries Title=""
-                IndependentValueBinding="{Binding Key}"
-                DependentValueBinding="{Binding Value}" >
-                    <DVC:LineSeries.Background>
-                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                            <GradientStop Color="#FFB9D6F7"/>
-                            <GradientStop Color="#FF284B70" Offset="1"/>
-                        </LinearGradientBrush>
-                    </DVC:LineSeries.Background>
-                </DVC:LineSeries>
-            </DVC:Chart>
-            <DatePicker x:Name="DatePickPredict" HorizontalAlignment="Left" Margin="380,97,0,0" VerticalAlignment="Top"/>
-            <Button x:Name="PredictSolarBtn" Content="Button" HorizontalAlignment="Left" Margin="640,168,0,0" VerticalAlignment="Top" Width="75" Click="CalculateBtn_Click"/>
-
         </Grid>
         <Grid x:Name="compareGrid" Visibility="Collapsed" IsEnabled="False"></Grid>
         <Grid x:Name="predictGrid" Visibility="Collapsed" IsEnabled="False"></Grid>

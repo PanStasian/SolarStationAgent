@@ -35,5 +35,7 @@ namespace SolarStation
             double E = (double)(panelAmount * Insolation * (NominalPower_W / 1000) * Ko * Klost) / 24;
             return E;
         }
+
+        
     }
 }
