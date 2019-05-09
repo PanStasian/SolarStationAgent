@@ -30,7 +30,7 @@
                         <materialDesign:PackIcon x:Name="unchecked" Kind="Close" Visibility="Collapsed" IsEnabled="False" Foreground="#FFE20000" Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
                     </StackPanel>
                 </ListViewItem>
-                <ListViewItem Height="50">
+               <!-- <ListViewItem Height="50">
                     <StackPanel  Orientation="Horizontal" Height="36" >
                         <materialDesign:PackIcon Kind="CurrencyUsd" Foreground="#FF5658D7" Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
                         <TextBlock Text="Ціна однієї панелі:" VerticalAlignment="Center" FontSize="15"/>
@@ -44,6 +44,13 @@
                         <TextBlock Text="Ціна за всі панелі:" VerticalAlignment="Center" FontSize="15"/>
                         <TextBox x:Name="priceSum"  VerticalAlignment="Center" Margin="10,6,0,5" Width="43" FontSize="15" />
                         <Label Content="$" VerticalAlignment="Center" FontSize="15" />
+                    </StackPanel>
+                </ListViewItem>-->
+                <ListViewItem Height="50">
+                    <StackPanel  Orientation="Horizontal" Height="36" >
+                        <materialDesign:PackIcon Kind="Counter" Foreground="#FF5658D7" Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                        <TextBlock Text="Кількість працюючих панелей:" VerticalAlignment="Center" FontSize="15"/>
+                        <TextBox x:Name="panelnumber"  VerticalAlignment="Center" Margin="10,6,0,5" FontSize="15" />
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem Height="50">

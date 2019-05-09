@@ -60,7 +60,7 @@ namespace SolarStation
             FillChart();
         }
 
-        
+
 
         public void FillChart()
         {
@@ -99,7 +99,7 @@ namespace SolarStation
                 }
                 ((LineSeries)Chart.Series[0]).ItemsSource = KeyValue;
             }
-            day.Text = sum.ToString();
+            day.Text = sum.ToString("#.##");
 
             //foreach(var time in sp.SolarInsalations.Where(x => x.Date == date).ToList())
             //{
@@ -134,7 +134,8 @@ namespace SolarStation
             FillChart();
         }
 
-        private void ReportBtn_Click(object sender, RoutedEventArgs e)
+        
+        private void OpenReport_Click(object sender, RoutedEventArgs e)
         {
             Report reportWindow = new Report();
             reportWindow.Show();
@@ -165,7 +166,8 @@ namespace SolarStation
 
             Header.Content = itemInf.NamePanel.ToString();
 
-            NominalPowTxt.Text = itemInf.NominalPower_W.ToString();
+            double kWh = (double)itemInf.NominalPower_W / 1000;
+            NominalPowTxt.Text = kWh.ToString();
 
             RatedVoltageTxt.Text = itemInf.RatedVoltage_V.ToString();
 
@@ -268,8 +270,9 @@ namespace SolarStation
             ButtonCloseMenu.Visibility = Visibility.Collapsed;
         }
 
+
         #endregion
 
-        
+       
     }
 }

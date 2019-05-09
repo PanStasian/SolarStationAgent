@@ -36,9 +36,9 @@ namespace SolarStation
             double kWh = (double)itemInf.NominalPower_W / 1000;
             V.Text = kWh.ToString();
             PerDay.Text = parent.day.Text;
-            priceOne.Text= itemInf.Price__.ToString();
-            double paid = itemInf.Price__ * parent.PanelAmountSl.Value;
-            priceSum.Text = paid.ToString();
+           //priceOne.Text= itemInf.Price__.ToString();
+           //double paid = itemInf.Price__ * parent.PanelAmountSl.Value;
+           //priceSum.Text = paid.ToString();
             if (parent.isTrackSun.IsChecked==true)
             {
                 @checked.Visibility = Visibility.Visible;
@@ -49,6 +49,8 @@ namespace SolarStation
                 @unchecked.Visibility = Visibility.Visible;
                 @unchecked.IsEnabled = true;
             }
+
+            panelnumber.Text = parent.PanelAmountSl.Value.ToString();
         }
 
 
