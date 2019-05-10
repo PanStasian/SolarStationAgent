@@ -23,9 +23,12 @@ namespace SolarStation
     /// </summary>
     public partial class MainWindow : Window
     {
+        
+        double sumCompare=0;
         int panelAmount;
         Solar_Panels SolarPanelSelected;
         Solar_Panels SolarPanelSelectedInf;
+        Solar_Panels SolarPanelSelectedCompareItem;
         SolarPanelEntities sp = new SolarPanelEntities();
         public List<Solar_Panels> SolPal { get; set; }
         public List<Solar_Panels> SolPalInf { get; set; }
@@ -41,7 +44,6 @@ namespace SolarStation
             PanelAmountSl.Value = 10;
             isTrackSun.Checked += CheckBox_Checked;
             isTrackSun.Unchecked += CheckBox_Unchecked;
-            //FillChart();
         }
 
         #region Main
@@ -58,6 +60,14 @@ namespace SolarStation
             double kWh = (double)SolarPanelSelected.NominalPower_W / 1000;
             V.Text = kWh.ToString();
             FillChart();
+
+            compareThis.Text = SolarPanelSelected.NamePanel.ToString();
+            PowerComparable.Text = kWh.ToString();
+            PriceComparable.Text = SolarPanelSelected.Price__.ToString();
+            EffComparable.Text = SolarPanelSelected.PanelEfficiency.ToString();
+            maxPowComparable.Text = SolarPanelSelected.MaxSystemVoltage_V.ToString();
+            CrystallComparable.Text = SolarPanelSelected.SolarCells.ToString();
+            manufacturerComparable.Text = SolarPanelSelected.Manufacturer.ToString();
         }
 
 
@@ -71,8 +81,7 @@ namespace SolarStation
 
             List<KeyValuePair<string, double>> KeyValue = new List<KeyValuePair<string, double>>();
             DateTime date = DatePick.SelectedDate.Value;
-            double sum = 0;
-
+            double perDayPower = 0;
 
             if (date.Year != 2019)
             {
@@ -84,7 +93,7 @@ namespace SolarStation
                 foreach (var time in sp.SolarInsalations.Where(x => x.Date == date).ToList())
                 {
                     double power = SolarPanelSelected.CalculatePower((int)time.ETRN, panelAmount);
-                    sum += power;
+                    perDayPower += power;
                     KeyValue.Add(new KeyValuePair<string, double>(time.Time, power));
                 }
                 ((LineSeries)Chart.Series[0]).ItemsSource = KeyValue;
@@ -94,28 +103,14 @@ namespace SolarStation
                 foreach (var time in sp.SolarInsalations.Where(x => x.Date == date).ToList())
                 {
                     double power = SolarPanelSelected.CalculatePower((int)time.ETR, panelAmount);
-                    sum += power;
+                    perDayPower += power;
                     KeyValue.Add(new KeyValuePair<string, double>(time.Time, power));
                 }
                 ((LineSeries)Chart.Series[0]).ItemsSource = KeyValue;
             }
-            day.Text = sum.ToString("#.##");
+            day.Text = perDayPower.ToString("#.##");
 
-            //foreach(var time in sp.SolarInsalations.Where(x => x.Date == date).ToList())
-            //{
-            //    if(isTrackSun.IsChecked == true)
-            //    {
-            //        double power = SolarPanelSelected.CalculatePower((int)time.ETRN, panelAmount);
-            //        KeyValue.Add(new KeyValuePair<string, double>(time.Time, power));
-            //    }
-            //    else
-            //    {
-            //        double power = SolarPanelSelected.CalculatePower((int)time.ETR, panelAmount);
-            //        KeyValue.Add(new KeyValuePair<string, double>(time.Time, power));
-            //    }
-            //    
-            //}
-            //((LineSeries)Chart.Series[0]).ItemsSource = KeyValue;
+           
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -199,11 +194,124 @@ namespace SolarStation
             FillChart();
         }
 
-        
+        #region Compare
+        private void SolarPanelCompareList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //SolarPanelSelectedCompareItem = SolarPanelCompareList.SelectedItem as Solar_Panels;
+            //compareTo.Text = SolarPanelSelectedCompareItem.NamePanel.ToString();
+            //double kWh = (double)SolarPanelSelectedCompareItem.NominalPower_W / 1000;
+            //PowerComparaTo.Text = kWh.ToString();
+            //priceCompareTo.Text = SolarPanelSelectedCompareItem.Price__.ToString();
+            
+        }
 
-        
+        public void Compare()
+        {
+            if(SolarPanelSelected.NominalPower_W.Value> SolarPanelSelectedCompareItem.NominalPower_W.Value)
+            {
+                NomPowComparable.Background =  Brushes.Green;
+                NomPowCompareTo.Background= Brushes.DarkRed;
+            }
+            else if (SolarPanelSelected.NominalPower_W.Value < SolarPanelSelectedCompareItem.NominalPower_W.Value)
+            {
+                NomPowComparable.Background = Brushes.DarkRed;
+                NomPowCompareTo.Background = Brushes.Green;
+            }
 
-        
+            if (SolarPanelSelected.Price__ < SolarPanelSelectedCompareItem.Price__)
+            {
+                PriceListComparable.Background = Brushes.Green;
+                PriceListCompareTo.Background = Brushes.DarkRed;
+            }
+            else if (SolarPanelSelected.NominalPower_W.Value > SolarPanelSelectedCompareItem.NominalPower_W.Value)
+            {
+                PriceListComparable.Background = Brushes.DarkRed;
+                PriceListCompareTo.Background = Brushes.Green;
+            }
+
+            if (SolarPanelSelected.PanelEfficiency > SolarPanelSelectedCompareItem.PanelEfficiency)
+            {
+                EfficientyListComparable.Background = Brushes.Green;
+                EfficientyListCompareTo.Background = Brushes.DarkRed;
+            }
+            else if (SolarPanelSelected.PanelEfficiency < SolarPanelSelectedCompareItem.PanelEfficiency)
+            {
+                EfficientyListComparable.Background = Brushes.DarkRed;
+                EfficientyListCompareTo.Background = Brushes.Green;
+            }
+
+            if (SolarPanelSelected.MaxSystemVoltage_V > SolarPanelSelectedCompareItem.MaxSystemVoltage_V)
+            {
+                maxPowerListComparable.Background = Brushes.Green;
+                maxPowerListCompareTo.Background = Brushes.DarkRed;
+            }
+            else if (SolarPanelSelected.MaxSystemVoltage_V < SolarPanelSelectedCompareItem.MaxSystemVoltage_V)
+            {
+                maxPowerListComparable.Background = Brushes.DarkRed;
+                maxPowerListCompareTo.Background = Brushes.Green;
+            }
+
+
+        }
+
+       
+      
+
+
+        public void CalculateForCompare()
+        {
+            List<KeyValuePair<string, double>> KeyValue = new List<KeyValuePair<string, double>>();
+            DateTime date = DatePick.SelectedDate.Value;
+
+
+            if (date.Year != 2019)
+            {
+                int years = 2019 - date.Year;
+                date = date.AddYears(years);
+            }
+            if (isTrackSun.IsChecked == true)
+            {
+                foreach (var time in sp.SolarInsalations.Where(x => x.Date == date).ToList())
+                {
+                    double power = SolarPanelSelectedCompareItem.CalculatePower((int)time.ETRN, panelAmount);
+                    sumCompare += power;
+                    //KeyValue.Add(new KeyValuePair<string, double>(time.Time, power));
+                }
+                //((LineSeries)Chart.Series[0]).ItemsSource = KeyValue;
+            }
+            else
+            {
+                foreach (var time in sp.SolarInsalations.Where(x => x.Date == date).ToList())
+                {
+                    double power = SolarPanelSelectedCompareItem.CalculatePower((int)time.ETR, panelAmount);
+                    sumCompare += power;
+                    //KeyValue.Add(new KeyValuePair<string, double>(time.Time, power));
+                }
+                //((LineSeries)Chart.Series[0]).ItemsSource = KeyValue;
+            }
+        }
+
+        private void CompareBtn_Click(object sender, RoutedEventArgs e)
+        {
+            SolarPanelSelectedCompareItem = SolarPanelCompareList.SelectedItem as Solar_Panels;
+            compareTo.Text = SolarPanelSelectedCompareItem.NamePanel.ToString();
+            double kWh = (double)SolarPanelSelectedCompareItem.NominalPower_W / 1000;
+            PowerComparaTo.Text = kWh.ToString();
+            priceCompareTo.Text = SolarPanelSelectedCompareItem.Price__.ToString();
+            EffCompareTo.Text = SolarPanelSelectedCompareItem.PanelEfficiency.ToString();
+            maxPowCompareTo.Text = SolarPanelSelectedCompareItem.MaxSystemVoltage_V.ToString();
+            CrystallCompareTo.Text = SolarPanelSelectedCompareItem.SolarCells.ToString();
+            manufacturerCompareTo.Text = SolarPanelSelectedCompareItem.Manufacturer.ToString();
+
+            CalculateForCompare();
+            Compare();
+        }
+        #endregion
+
+
+
+
+
 
         #region Tab Navigation
         private void Tab_Click(object sender, RoutedEventArgs e)
@@ -271,8 +379,10 @@ namespace SolarStation
         }
 
 
+
+
         #endregion
 
-       
+        
     }
 }
