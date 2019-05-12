@@ -25,11 +25,11 @@ namespace SolarStation
     {
         
         double sumCompare=0;
-        int panelAmount;
-        Solar_Panels SolarPanelSelected;
-        Solar_Panels SolarPanelSelectedInf;
-        Solar_Panels SolarPanelSelectedCompareItem;
-        SolarPanelEntities sp = new SolarPanelEntities();
+        public int panelAmount;
+        public Solar_Panels SolarPanelSelected;
+        public Solar_Panels SolarPanelSelectedInf;
+        public Solar_Panels SolarPanelSelectedCompareItem;
+        public SolarPanelEntities sp = new SolarPanelEntities();
         public List<Solar_Panels> SolPal { get; set; }
         public List<Solar_Panels> SolPalInf { get; set; }
 
@@ -381,8 +381,30 @@ namespace SolarStation
 
 
 
+
         #endregion
 
-        
+        private void SaveGraph_Click(object sender, RoutedEventArgs e)
+        {
+            PrintDialog printDialog = new PrintDialog();
+            if (printDialog.ShowDialog() == true)
+            {
+                printDialog.PrintVisual(Chart, "");
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SaveComparisonBtn_Click(object sender, RoutedEventArgs e)
+        {
+            PrintDialog printDialog = new PrintDialog();
+            if (printDialog.ShowDialog() == true)
+            {
+                printDialog.PrintVisual(SaveCompare, "");
+            }
+        }
     }
 }
