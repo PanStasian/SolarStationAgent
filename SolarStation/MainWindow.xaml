@@ -37,7 +37,7 @@
     <Grid>
         <Grid x:Name="panels" Visibility="Visible" IsEnabled="True" Panel.ZIndex="999">
             <Grid Height="55" VerticalAlignment="Top" Background="#FF5658D7">
-                
+
             </Grid>
             <Grid x:Name="GridMenu" Width="60" HorizontalAlignment="Left" Background="#FF5658D7">
 
@@ -83,7 +83,7 @@
             </Grid>
         </Grid>
 
-        <Grid x:Name="mainGrid" Visibility="Visible" IsEnabled="True">
+        <Grid x:Name="mainGrid" Visibility="Collapsed" IsEnabled="True">
             <ListView Margin="60,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListViewItem Height="50">
                     <StackPanel Orientation="Horizontal">
@@ -116,32 +116,33 @@
                     </StackPanel>
                 </ListViewItem>
 
-                <ListViewItem Height="50">
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="FileReport" Margin="5" Foreground="#FF5658D7" Width="20" Height="20" VerticalAlignment="Center" FontSize="15"/>
-                        <Button Name="openReport" Width="150" Content="Скласти звіт" Click="OpenReport_Click"/>
-                    </StackPanel>
-                </ListViewItem>
-
-                
             </ListView>
 
-            <ListView HorizontalAlignment="Left" Margin="660 170 0 0" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                
-            </ListView>
 
-            <ListView HorizontalAlignment="Left" Margin="380,120,0,0" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
+            <ListView  HorizontalAlignment="Right" VerticalAlignment="Top"  Margin="0 150 0 0">
                 <ListViewItem Height="50">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Clock" Margin="5" Foreground="#FF5658D7" Width="20" Height="20" VerticalAlignment="Center" FontSize="15"/>
-                        <Button x:Name="CalculateBtn" Content="Перерахувати" Width="130" Height="30" Click="CalculateBtn_Click" FontSize="15" FontWeight="Normal"/>
+                        <Button x:Name="CalculateBtn" Content="Перерахувати для дати: "  Height="30" Click="CalculateBtn_Click" FontSize="15" FontWeight="Normal" Background="#FF169908" BorderBrush="#FF169908"/>
                         <DatePicker x:Name="DatePick" Margin="5"/>
                     </StackPanel>
                 </ListViewItem>
-                
+
+                <ListViewItem Height="50">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="FileReport" Margin="5" Foreground="#FF5658D7" Width="20" Height="20" VerticalAlignment="Center" FontSize="15"/>
+                        <Button Name="openReport" Content="Скласти звіт за поточну дату" Click="OpenReport_Click" FontWeight="Normal" Background="#FF169908" BorderBrush="#FF169908"/>
+                    </StackPanel>
+                </ListViewItem>
+            </ListView>
+
+
+            <ListView HorizontalAlignment="Left" Margin="380,120,0,0" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
+
+
             </ListView>
             <TextBlock x:Name="day" Margin="-95,225,1138.6,330.4" Visibility="Hidden"/>
-            
+
             <DVC:Chart x:Name="Chart" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="1005" Height="340" BorderThickness="0" BorderBrush="{x:Null}" ClipToBounds="True" SnapsToDevicePixels="False" Margin="60,0,0,0.4" >
                 <DVC:LineSeries Title=""
                 IndependentValueBinding="{Binding Key}"
@@ -169,49 +170,49 @@
 
 
             <ListView VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250 200 0 0" FontSize="15" Foreground="White" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                    <ListViewItem  Background="#FF5658D7"  Margin="1">
-                        <StackPanel  Orientation="Horizontal">
-                            <TextBlock Text="Номінальна потужність" Margin="5"/>
-                            <TextBox Name="NominalPowTxt" Margin="5 0 0 0"/>
-                            <TextBlock Text="кВт" Margin="5"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem  Background="#FF5658D7" Margin="1">
-                        <StackPanel  Orientation="Horizontal">
-                            <TextBlock Text="Струм при максимальній потужності" Margin="5"/>
-                            <TextBox x:Name="RatedVoltageTxt" Margin="5 0 0 0"/>
-                            <TextBlock Text="A"  Margin="5"/>
-                        </StackPanel>
-                    </ListViewItem >
-                    <ListViewItem  Background="#FF5658D7" Margin="1">
-                        <StackPanel  Orientation="Horizontal">
-                            <TextBlock Text="Напруга при максимальній потужності" Margin="5"/>
-                            <TextBox x:Name="RatedCurrentTxt" Margin="5 0 0 0"/>
-                            <TextBlock Text="B" Margin="5"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem  Background="#FF5658D7"  Margin="1">
-                        <StackPanel  Orientation="Horizontal">
-                            <TextBlock Text="Напруга холостого ходу" Margin="5"/>
-                            <TextBox x:Name="OpenCircuitVoltageTxt" Margin="5 0 0 0"/>
-                            <TextBlock Text="В" Margin="5"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem  Background="#FF5658D7" Margin="1">
-                        <StackPanel  Orientation="Horizontal">
-                            <TextBlock Text="Максимальна напруга системи" Margin="5"/>
-                            <TextBox x:Name="MaxSystemVoltageTxt" Margin="5 0 0 0"/>
-                            <TextBlock Text="В" Margin="5"/>
-                        </StackPanel>
-                    </ListViewItem >
-                    <ListViewItem  Background="#FF5658D7" Margin="1">
-                        <StackPanel  Orientation="Horizontal">
-                            <TextBlock Text="ККД" Margin="5"/>
-                            <TextBox x:Name="PanelEfficiencyTxt" Margin="5 0 0 0"/>
-                            <TextBlock Text="%" Margin="5"/>
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
+                <ListViewItem  Background="#FF5658D7"  Margin="1">
+                    <StackPanel  Orientation="Horizontal">
+                        <TextBlock Text="Номінальна потужність" Margin="5"/>
+                        <TextBox Name="NominalPowTxt" Margin="5 0 0 0"/>
+                        <TextBlock Text="кВт" Margin="5"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem  Background="#FF5658D7" Margin="1">
+                    <StackPanel  Orientation="Horizontal">
+                        <TextBlock Text="Струм при максимальній потужності" Margin="5"/>
+                        <TextBox x:Name="RatedVoltageTxt" Margin="5 0 0 0"/>
+                        <TextBlock Text="A"  Margin="5"/>
+                    </StackPanel>
+                </ListViewItem >
+                <ListViewItem  Background="#FF5658D7" Margin="1">
+                    <StackPanel  Orientation="Horizontal">
+                        <TextBlock Text="Напруга при максимальній потужності" Margin="5"/>
+                        <TextBox x:Name="RatedCurrentTxt" Margin="5 0 0 0"/>
+                        <TextBlock Text="B" Margin="5"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem  Background="#FF5658D7"  Margin="1">
+                    <StackPanel  Orientation="Horizontal">
+                        <TextBlock Text="Напруга холостого ходу" Margin="5"/>
+                        <TextBox x:Name="OpenCircuitVoltageTxt" Margin="5 0 0 0"/>
+                        <TextBlock Text="В" Margin="5"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem  Background="#FF5658D7" Margin="1">
+                    <StackPanel  Orientation="Horizontal">
+                        <TextBlock Text="Максимальна напруга системи" Margin="5"/>
+                        <TextBox x:Name="MaxSystemVoltageTxt" Margin="5 0 0 0"/>
+                        <TextBlock Text="В" Margin="5"/>
+                    </StackPanel>
+                </ListViewItem >
+                <ListViewItem  Background="#FF5658D7" Margin="1">
+                    <StackPanel  Orientation="Horizontal">
+                        <TextBlock Text="ККД" Margin="5"/>
+                        <TextBox x:Name="PanelEfficiencyTxt" Margin="5 0 0 0"/>
+                        <TextBlock Text="%" Margin="5"/>
+                    </StackPanel>
+                </ListViewItem>
+            </ListView>
 
             <ListView VerticalAlignment="Top" HorizontalAlignment="Left" Margin="620 220 0 0" FontSize="15" Foreground="White" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                 <ListViewItem  Background="#FF5658D7"  Margin="1">
@@ -251,145 +252,175 @@
         </Grid>
         <Grid x:Name="compareGrid" Visibility="Collapsed" IsEnabled="True">
             <Grid x:Name="SaveCompare">
-            <Grid HorizontalAlignment="Left" Width="540">
-                <ListView VerticalAlignment="Top" Margin="80 70 30 0" HorizontalAlignment="Center">
-                    <ListViewItem >
-                        <StackPanel  Orientation="Horizontal">
-                            <TextBlock Text="Поточна панель" TextAlignment="Center"/>
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
-                <TextBlock x:Name="compareThis" VerticalAlignment="Top" Margin="80 110 30 0" FontSize="20" Foreground="#FF5658D7" TextAlignment="Center"/>
+                <Grid HorizontalAlignment="Left" Width="540">
+                    <ListView VerticalAlignment="Top" Margin="80 70 30 0" HorizontalAlignment="Center">
+                        <ListViewItem >
+                            <StackPanel  Orientation="Horizontal">
+                                <TextBlock Text="Поточна панель" TextAlignment="Center"/>
+                            </StackPanel>
+                        </ListViewItem>
+                    </ListView>
+                    <TextBlock x:Name="compareThis" VerticalAlignment="Top" Margin="80 110 30 0" FontSize="20" Foreground="#FF5658D7" TextAlignment="Center"/>
 
-                <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="80 145 30 180" Foreground="White" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                    <ListViewItem x:Name="NomPowComparable" Height="50" Background="#FF5658D7"  Margin="1">
-                        <StackPanel  Orientation="Horizontal" Height="36" >
-                            <materialDesign:PackIcon Kind="Electricity" Foreground="White" Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
-                            <TextBlock Text="Номінальна потужність панелі:" VerticalAlignment="Center" FontSize="15"/>
-                            <TextBox x:Name="PowerComparable"  VerticalAlignment="Center" Margin="10,6,0,5" Width="43" FontSize="15" />
-                            <TextBlock Text="кВт" VerticalAlignment="Center" FontSize="15" />
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem x:Name="PriceListComparable" Height="50" Background="#FF5658D7"  Margin="1">
-                        <StackPanel  Orientation="Horizontal" Height="36" >
-                            <materialDesign:PackIcon Kind="CurrencyUsd"  Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
-                            <TextBlock Text="Ціна однієї панелі:" VerticalAlignment="Center" FontSize="15"/>
-                            <TextBox x:Name="PriceComparable"  VerticalAlignment="Center" Margin="10,6,0,5" FontSize="15" />
-                            <TextBlock Text="$" VerticalAlignment="Center" FontSize="15" />
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem x:Name="EfficientyListComparable" Height="50" Background="#FF5658D7"  Margin="1">
-                        <StackPanel  Orientation="Horizontal" Height="36" >
-                            <materialDesign:PackIcon Kind="Percent"  Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
-                            <TextBlock Text="ККД:" VerticalAlignment="Center" FontSize="15"/>
-                            <TextBox x:Name="EffComparable"  VerticalAlignment="Center" Margin="10,6,0,5" FontSize="15" />
-                            <TextBlock Text="%" VerticalAlignment="Center" FontSize="15" />
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem x:Name="maxPowerListComparable" Height="50" Background="#FF5658D7"  Margin="1">
-                        <StackPanel  Orientation="Horizontal" Height="36" >
-                            <materialDesign:PackIcon Kind="Maxcdn"  Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
-                            <TextBlock Text="Максимальна напруга системи:" VerticalAlignment="Center" FontSize="15"/>
-                            <TextBox x:Name="maxPowComparable"  VerticalAlignment="Center" Margin="10,6,0,5" FontSize="15" />
-                            <TextBlock Text="B" VerticalAlignment="Center" FontSize="15" Margin="5"/>
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
+                    <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="80 145 30 180" Foreground="White" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                        <ListViewItem x:Name="NomPowComparable" Height="50" Background="#FF5658D7"  Margin="1">
+                            <StackPanel  Orientation="Horizontal" Height="36" >
+                                <materialDesign:PackIcon Kind="Electricity" Foreground="White" Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                                <TextBlock Text="Номінальна потужність панелі:" VerticalAlignment="Center" FontSize="15"/>
+                                <TextBox x:Name="PowerComparable"  VerticalAlignment="Center" Margin="10,6,0,5" Width="43" FontSize="15" />
+                                <TextBlock Text="кВт" VerticalAlignment="Center" FontSize="15" />
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem x:Name="PriceListComparable" Height="50" Background="#FF5658D7"  Margin="1">
+                            <StackPanel  Orientation="Horizontal" Height="36" >
+                                <materialDesign:PackIcon Kind="CurrencyUsd"  Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                                <TextBlock Text="Ціна однієї панелі:" VerticalAlignment="Center" FontSize="15"/>
+                                <TextBox x:Name="PriceComparable"  VerticalAlignment="Center" Margin="10,6,0,5" FontSize="15" />
+                                <TextBlock Text="$" VerticalAlignment="Center" FontSize="15" />
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem x:Name="EfficientyListComparable" Height="50" Background="#FF5658D7"  Margin="1">
+                            <StackPanel  Orientation="Horizontal" Height="36" >
+                                <materialDesign:PackIcon Kind="Percent"  Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                                <TextBlock Text="ККД:" VerticalAlignment="Center" FontSize="15"/>
+                                <TextBox x:Name="EffComparable"  VerticalAlignment="Center" Margin="10,6,0,5" FontSize="15" />
+                                <TextBlock Text="%" VerticalAlignment="Center" FontSize="15" />
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem x:Name="maxPowerListComparable" Height="50" Background="#FF5658D7"  Margin="1">
+                            <StackPanel  Orientation="Horizontal" Height="36" >
+                                <materialDesign:PackIcon Kind="Maxcdn"  Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                                <TextBlock Text="Максимальна напруга системи:" VerticalAlignment="Center" FontSize="15"/>
+                                <TextBox x:Name="maxPowComparable"  VerticalAlignment="Center" Margin="10,6,0,5" FontSize="15" />
+                                <TextBlock Text="B" VerticalAlignment="Center" FontSize="15" Margin="5"/>
+                            </StackPanel>
+                        </ListViewItem>
+                    </ListView>
 
-                <ListView Margin="80 145 30 50" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VerticalAlignment="Bottom" Foreground="White" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                    <ListViewItem Height="50" Background="#FF5658D7" Margin="1">
-                        <StackPanel  Orientation="Horizontal" Height="36" >
-                            <materialDesign:PackIcon Kind="Passport"  Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
-                            <TextBlock Text="Тип модуля:" VerticalAlignment="Center" FontSize="15"/>
-                            <TextBox x:Name="CrystallComparable"  VerticalAlignment="Center" Margin="10,6,0,5" FontSize="15" />
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Height="50" Background="#FF5658D7" Margin="1">
-                        <StackPanel  Orientation="Horizontal" Height="36" >
-                            <materialDesign:PackIcon Kind="Flag"  Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
-                            <TextBlock Text="Виробник:" VerticalAlignment="Center" FontSize="15"/>
-                            <TextBox x:Name="manufacturerComparable"  VerticalAlignment="Center" Margin="10,6,0,5" FontSize="15" />
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
+                    <ListView Margin="80 145 30 50" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VerticalAlignment="Bottom" Foreground="White" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                        <ListViewItem Height="50" Background="#FF5658D7" Margin="1">
+                            <StackPanel  Orientation="Horizontal" Height="36" >
+                                <materialDesign:PackIcon Kind="Passport"  Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                                <TextBlock Text="Тип модуля:" VerticalAlignment="Center" FontSize="15"/>
+                                <TextBox x:Name="CrystallComparable"  VerticalAlignment="Center" Margin="10 0 0 0" FontSize="15" />
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem Height="50" Background="#FF5658D7" Margin="1">
+                            <StackPanel  Orientation="Horizontal" Height="36" >
+                                <materialDesign:PackIcon Kind="Flag"  Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                                <TextBlock Text="Виробник:" VerticalAlignment="Center" FontSize="15"/>
+                                <TextBox x:Name="manufacturerComparable"  VerticalAlignment="Center" Margin="10 0 0 0" FontSize="15" />
+                            </StackPanel>
+                        </ListViewItem>
+                    </ListView>
 
-            </Grid>
-            
-            <Rectangle Stroke="#FF5658D7" Width="10" Height="700" StrokeThickness="10" StrokeDashArray="2 4" SnapsToDevicePixels="True" Fill="#FF5658D7"/>
+                </Grid>
 
-            <Grid HorizontalAlignment="Right" Width="540">
-                <ListView VerticalAlignment="Top" Margin="30 70 30 0" HorizontalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                    <ListViewItem >
-                        <StackPanel  Orientation="Horizontal">
-                            <TextBlock Text="Оберіть панель для порівняння" TextAlignment="Center"/>
-                            <ComboBox x:Name="SolarPanelCompareList" Width="100" SelectedIndex="0" Margin="5 -5 0 0" SelectionChanged="SolarPanelCompareList_SelectionChanged" ItemsSource="{Binding}" SelectedValuePath="Id_panel" DisplayMemberPath="NamePanel" x:FieldModifier="public"  />
-                            <Button x:Name="compareBtn" Click="CompareBtn_Click" Margin="5 -5 0 0" Content="Порівняти" />
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
+                <Rectangle Stroke="#FF5658D7" Width="10" Height="700" StrokeThickness="10" StrokeDashArray="2 4" SnapsToDevicePixels="True" Fill="#FF5658D7"/>
 
-                <TextBlock x:Name="compareTo" VerticalAlignment="Top" Margin="90 110 80 0" FontSize="20" Foreground="#FF5658D7" TextAlignment="Center"/>
+                <Grid HorizontalAlignment="Right" Width="540">
+                    <ListView VerticalAlignment="Top" Margin="30 70 30 0" HorizontalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListViewItem >
+                            <StackPanel  Orientation="Horizontal">
+                                <TextBlock Text="Оберіть панель для порівняння" TextAlignment="Center"/>
+                                <ComboBox x:Name="SolarPanelCompareList" Width="100" SelectedIndex="0" Margin="5 -5 0 0" SelectionChanged="SolarPanelCompareList_SelectionChanged" ItemsSource="{Binding}" SelectedValuePath="Id_panel" DisplayMemberPath="NamePanel" x:FieldModifier="public"  />
+                                <Button x:Name="compareBtn" Click="CompareBtn_Click" Margin="5 -5 0 0" Content="Порівняти" />
+                            </StackPanel>
+                        </ListViewItem>
+                    </ListView>
 
-                <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="30 145 30 180" Foreground="White" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                    <ListViewItem x:Name="NomPowCompareTo" Height="50" Background="#FF5658D7"  Margin="1">
-                        <StackPanel  Orientation="Horizontal" Height="36" >
-                            <materialDesign:PackIcon Kind="Electricity" Foreground="White" Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
-                            <TextBlock Text="Номінальна потужність панелі:" VerticalAlignment="Center" FontSize="15"/>
-                            <TextBox x:Name="PowerComparaTo"  VerticalAlignment="Center" Margin="10,6,0,5" Width="43" FontSize="15" />
-                            <TextBlock Text="кВт" VerticalAlignment="Center" FontSize="15" />
-                        </StackPanel>
-                    </ListViewItem>
+                    <TextBlock x:Name="compareTo" VerticalAlignment="Top" Margin="90 110 80 0" FontSize="20" Foreground="#FF5658D7" TextAlignment="Center"/>
 
-                    <ListViewItem x:Name="PriceListCompareTo" Height="50" Background="#FF5658D7"  Margin="1">
-                        <StackPanel  Orientation="Horizontal" Height="36" >
-                            <materialDesign:PackIcon Kind="CurrencyUsd"  Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
-                            <TextBlock Text="Ціна однієї панелі:" VerticalAlignment="Center" FontSize="15"/>
-                            <TextBox x:Name="priceCompareTo"  VerticalAlignment="Center" Margin="10,6,0,5" Width="43" FontSize="15" />
-                            <TextBlock Text="$" VerticalAlignment="Center" FontSize="15" />
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem x:Name="EfficientyListCompareTo" Height="50" Background="#FF5658D7"  Margin="1">
-                        <StackPanel  Orientation="Horizontal" Height="36" >
-                            <materialDesign:PackIcon Kind="Percent"  Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
-                            <TextBlock Text="ККД:" VerticalAlignment="Center" FontSize="15"/>
-                            <TextBox x:Name="EffCompareTo"  VerticalAlignment="Center" Margin="10,6,0,5" FontSize="15" />
-                            <TextBlock Text="%" VerticalAlignment="Center" FontSize="15" />
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem x:Name="maxPowerListCompareTo" Height="50" Background="#FF5658D7"  Margin="1">
-                        <StackPanel  Orientation="Horizontal" Height="36" >
-                            <materialDesign:PackIcon Kind="Maxcdn"  Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
-                            <TextBlock Text="Максимальна напруга системи:" VerticalAlignment="Center" FontSize="15"/>
-                            <TextBox x:Name="maxPowCompareTo"  VerticalAlignment="Center" Margin="10,6,0,5" FontSize="15" />
-                            <TextBlock Text="B" VerticalAlignment="Center" FontSize="15" Margin="5"/>
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
+                    <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="30 145 30 180" Foreground="White" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                        <ListViewItem x:Name="NomPowCompareTo" Height="50" Background="#FF5658D7"  Margin="1">
+                            <StackPanel  Orientation="Horizontal" Height="36" >
+                                <materialDesign:PackIcon Kind="Electricity" Foreground="White" Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                                <TextBlock Text="Номінальна потужність панелі:" VerticalAlignment="Center" FontSize="15"/>
+                                <TextBox x:Name="PowerComparaTo"  VerticalAlignment="Center" Margin="10,6,0,5" Width="43" FontSize="15" />
+                                <TextBlock Text="кВт" VerticalAlignment="Center" FontSize="15" />
+                            </StackPanel>
+                        </ListViewItem>
 
-                <ListView Margin="30 145 30 50" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VerticalAlignment="Bottom" Foreground="White" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                    <ListViewItem Height="50" Background="#FF5658D7" Margin="1">
-                        <StackPanel  Orientation="Horizontal" Height="36" >
-                            <materialDesign:PackIcon Kind="Passport"  Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
-                            <TextBlock Text="Тип модуля:" VerticalAlignment="Center" FontSize="15"/>
-                            <TextBox x:Name="CrystallCompareTo"  VerticalAlignment="Center" Margin="10,6,0,5" FontSize="15" />
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Height="50" Background="#FF5658D7" Margin="1">
-                        <StackPanel  Orientation="Horizontal" Height="36" >
-                            <materialDesign:PackIcon Kind="Flag"  Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
-                            <TextBlock Text="Виробник:" VerticalAlignment="Center" FontSize="15"/>
-                            <TextBox x:Name="manufacturerCompareTo"  VerticalAlignment="Center" Margin="10,6,0,5" FontSize="15" />
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
+                        <ListViewItem x:Name="PriceListCompareTo" Height="50" Background="#FF5658D7"  Margin="1">
+                            <StackPanel  Orientation="Horizontal" Height="36" >
+                                <materialDesign:PackIcon Kind="CurrencyUsd"  Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                                <TextBlock Text="Ціна однієї панелі:" VerticalAlignment="Center" FontSize="15"/>
+                                <TextBox x:Name="priceCompareTo"  VerticalAlignment="Center" Margin="10,6,0,5" Width="43" FontSize="15" />
+                                <TextBlock Text="$" VerticalAlignment="Center" FontSize="15" />
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem x:Name="EfficientyListCompareTo" Height="50" Background="#FF5658D7"  Margin="1">
+                            <StackPanel  Orientation="Horizontal" Height="36" >
+                                <materialDesign:PackIcon Kind="Percent"  Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                                <TextBlock Text="ККД:" VerticalAlignment="Center" FontSize="15"/>
+                                <TextBox x:Name="EffCompareTo"  VerticalAlignment="Center" Margin="10,6,0,5" FontSize="15" />
+                                <TextBlock Text="%" VerticalAlignment="Center" FontSize="15" />
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem x:Name="maxPowerListCompareTo" Height="50" Background="#FF5658D7"  Margin="1">
+                            <StackPanel  Orientation="Horizontal" Height="36" >
+                                <materialDesign:PackIcon Kind="Maxcdn"  Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                                <TextBlock Text="Максимальна напруга системи:" VerticalAlignment="Center" FontSize="15"/>
+                                <TextBox x:Name="maxPowCompareTo"  VerticalAlignment="Center" Margin="10,6,0,5" FontSize="15" />
+                                <TextBlock Text="B" VerticalAlignment="Center" FontSize="15" Margin="5"/>
+                            </StackPanel>
+                        </ListViewItem>
+                    </ListView>
 
-            </Grid>
+                    <ListView Margin="30 145 30 50" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VerticalAlignment="Bottom" Foreground="White" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                        <ListViewItem Height="50" Background="#FF5658D7" Margin="1">
+                            <StackPanel  Orientation="Horizontal" Height="36" >
+                                <materialDesign:PackIcon Kind="Passport"  Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                                <TextBlock Text="Тип модуля:" VerticalAlignment="Center" FontSize="15"/>
+                                <TextBox x:Name="CrystallCompareTo"  VerticalAlignment="Center" Margin="10 0 0 0" FontSize="15" />
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem Height="50" Background="#FF5658D7" Margin="1">
+                            <StackPanel  Orientation="Horizontal" Height="36" >
+                                <materialDesign:PackIcon Kind="Flag"  Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                                <TextBlock Text="Виробник:" VerticalAlignment="Center" FontSize="15"/>
+                                <TextBox x:Name="manufacturerCompareTo"  VerticalAlignment="Center" Margin="10 0 0 0" FontSize="15" />
+                            </StackPanel>
+                        </ListViewItem>
+                    </ListView>
+
+                </Grid>
             </Grid>
             <Button x:Name="SaveComparisonBtn" Click="SaveComparisonBtn_Click" Content="Зберегти" HorizontalAlignment="Center" Margin="0 0 0 10" VerticalAlignment="Bottom" Width="105"/>
 
 
         </Grid>
-        <Grid x:Name="predictGrid" Visibility="Collapsed" IsEnabled="False"></Grid>
+        <Grid x:Name="predictGrid" Visibility="Visible" IsEnabled="True">
+
+            <ListView VerticalAlignment="Top" Margin="80 70 30 0" HorizontalAlignment="Left">
+                <ListViewItem >
+                    <StackPanel  Orientation="Horizontal">
+                        <TextBlock Text="Вибрати дату початку" />
+                        <DatePicker x:Name="startDate" Width="90" Margin="10 -3 0 0"/>
+                    </StackPanel>
+                </ListViewItem>
+            </ListView>
+
+            <ListView VerticalAlignment="Top" Margin="340 70 30 0" HorizontalAlignment="Left">
+                <ListViewItem >
+                    <StackPanel  Orientation="Horizontal">
+                        <TextBlock Text="Вибрати кінцеву дату" />
+                        <DatePicker x:Name="endDate"  Width="90" Margin="10 -3 0 0"/>
+                    </StackPanel>
+                </ListViewItem>
+            </ListView>
+
+            <Button x:Name="SetPeriodCalc" Content="Розрахувати для дат"  Margin="300 70 0 0" VerticalAlignment="Top" HorizontalAlignment="Center" Click="SetPeriodCalc_Click"/>
+            <Button x:Name="reportOpen" Content="Зробити звіт"  Margin="0 70 30 0" VerticalAlignment="Top" HorizontalAlignment="Right" FontWeight="Normal" Background="#FF169908" BorderBrush="#FF169908"/>
+
+
+            <DVC:Chart x:Name="StatisticChart" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="1005" Height="350" BorderThickness="0" BorderBrush="{x:Null}" ClipToBounds="True" SnapsToDevicePixels="False" Margin="60,0,0,0.4" >
+                <DVC:LineSeries Title=""
+                IndependentValueBinding="{Binding Key}"
+                DependentValueBinding="{Binding Value}" >
+                </DVC:LineSeries>
+            </DVC:Chart>
+        </Grid>
 
     </Grid>
 

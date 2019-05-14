@@ -10,12 +10,12 @@
         xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         Title="PanelInf" Height="540" Width="923.2" ResizeMode="NoResize">
     <Grid>
+        <Grid  x:Name="ReportGrid" >
         <Grid Height="35" VerticalAlignment="Top" Background="#FF5658D7">
             <TextBlock x:Name="headerReport" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16"></TextBlock>
         </Grid>
 
-        <Grid Height="540" x:Name="ReportGrid" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,40,0,0">
-            <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled"  HorizontalAlignment="Left" Margin="5,40,0,0" VerticalAlignment="Top" >
                 <ListViewItem Height="50">
                     <StackPanel  Orientation="Horizontal" Height="36" >
                         <materialDesign:PackIcon Kind="Passport" Foreground="#FF5658D7" Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
@@ -32,22 +32,8 @@
                         <materialDesign:PackIcon x:Name="unchecked" Kind="Close" Visibility="Collapsed" IsEnabled="False" Foreground="#FFE20000" Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
                     </StackPanel>
                 </ListViewItem>
-                <!-- <ListViewItem Height="50">
-                    <StackPanel  Orientation="Horizontal" Height="36" >
-                        <materialDesign:PackIcon Kind="CurrencyUsd" Foreground="#FF5658D7" Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
-                        <TextBlock Text="Ціна однієї панелі:" VerticalAlignment="Center" FontSize="15"/>
-                        <TextBox x:Name="priceOne"  VerticalAlignment="Center" Margin="10,6,0,5" Width="43" FontSize="15" />
-                        <Label Content="$" VerticalAlignment="Center" FontSize="15" />
-                    </StackPanel>
-                </ListViewItem>
-                <ListViewItem Height="50">
-                    <StackPanel  Orientation="Horizontal" Height="36" >
-                        <materialDesign:PackIcon Kind="MoneyUsd" Foreground="#FF5658D7" Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
-                        <TextBlock Text="Ціна за всі панелі:" VerticalAlignment="Center" FontSize="15"/>
-                        <TextBox x:Name="priceSum"  VerticalAlignment="Center" Margin="10,6,0,5" Width="43" FontSize="15" />
-                        <Label Content="$" VerticalAlignment="Center" FontSize="15" />
-                    </StackPanel>
-                </ListViewItem>-->
+                
+                
                 <ListViewItem Height="50">
                     <StackPanel  Orientation="Horizontal" Height="36" >
                         <materialDesign:PackIcon Kind="Counter" Foreground="#FF5658D7" Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
@@ -55,6 +41,28 @@
                         <TextBox x:Name="panelnumber"  VerticalAlignment="Center" Margin="10,6,0,5" FontSize="15" />
                     </StackPanel>
                 </ListViewItem>
+                
+            </ListView>
+
+            <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled"  HorizontalAlignment="Right" Margin="5,40,0,0" VerticalAlignment="Top" >
+                <ListViewItem Height="50">
+                    <StackPanel  Orientation="Horizontal" Height="36" >
+                        <materialDesign:PackIcon Kind="MoneyUsd" Foreground="#FF5658D7" Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                        <TextBlock Text="Ціна за всі панелі:" VerticalAlignment="Center" FontSize="15"/>
+                        <TextBox x:Name="priceSum"  VerticalAlignment="Center" Margin="10,6,0,5" Width="43" FontSize="15" />
+                        <Label Content="$" VerticalAlignment="Center" FontSize="15" />
+                    </StackPanel>
+                </ListViewItem>
+
+                <ListViewItem Height="50">
+                    <StackPanel  Orientation="Horizontal" Height="36" >
+                        <materialDesign:PackIcon Kind="Nature" Foreground="#FF5658D7" Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                        <TextBlock Text="Отримано по зеленому тарифу:" VerticalAlignment="Center" FontSize="15"/>
+                        <TextBox x:Name="greenPrice"  VerticalAlignment="Center" Margin="10,6,0,5" Width="43" FontSize="15" />
+                        <Label Content="$" VerticalAlignment="Center" FontSize="15" />
+                    </StackPanel>
+                </ListViewItem>
+                
                 <ListViewItem Height="50">
                     <StackPanel  Orientation="Horizontal" Height="36" >
                         <materialDesign:PackIcon Kind="Electricity" Foreground="#FF5658D7" Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
@@ -65,14 +73,14 @@
                 </ListViewItem>
             </ListView>
             
-            <DVC:Chart x:Name="Chart" HorizontalAlignment="Left"  VerticalAlignment="Bottom"  BorderThickness="0" BorderBrush="{x:Null}" ClipToBounds="True" SnapsToDevicePixels="False" Margin="-5,0,0,59" Height="266" Width="905" >
+            <DVC:Chart x:Name="Chart" HorizontalAlignment="Left"  VerticalAlignment="Bottom"  BorderThickness="0" BorderBrush="{x:Null}" ClipToBounds="True" SnapsToDevicePixels="False"  Height="350" Width="905" >
                 <DVC:LineSeries Title=""
                 IndependentValueBinding="{Binding Key}"
                 DependentValueBinding="{Binding Value}" >
                 </DVC:LineSeries>
             </DVC:Chart>
         </Grid>
-        <Button x:Name="SaveBtn" Content="Зберегти" Margin="0 -60 0 20" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Click="SaveBtn_Click"/>
+        <Button x:Name="SaveBtn" Content="Зберегти" Margin="0 50 0 0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" Click="SaveBtn_Click"/>
 
     </Grid>
 </Window>

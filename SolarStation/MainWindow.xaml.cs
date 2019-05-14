@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data;
 using System.Windows.Controls.DataVisualization.Charting;
+using System.Data.Entity;
 
 namespace SolarStation
 {
@@ -23,8 +24,7 @@ namespace SolarStation
     /// </summary>
     public partial class MainWindow : Window
     {
-        
-        double sumCompare=0;
+        double sumCompare = 0;
         public int panelAmount;
         public Solar_Panels SolarPanelSelected;
         public Solar_Panels SolarPanelSelectedInf;
@@ -37,6 +37,7 @@ namespace SolarStation
         {
             InitializeComponent();
             DatePick.SelectedDate = DateTime.Now;
+            startDate.SelectedDate = DateTime.Now;
             BindCB();
             BindCBInfPanel();
             SolarPanelListCB.ItemsSource = sp.Solar_Panels.ToList();
@@ -53,7 +54,7 @@ namespace SolarStation
             SolPal = item;
             DataContext = SolPal;
         }
-        
+
         public void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SolarPanelSelected = SolarPanelListCB.SelectedItem as Solar_Panels;
@@ -110,7 +111,7 @@ namespace SolarStation
             }
             day.Text = perDayPower.ToString("#.##");
 
-           
+
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -129,7 +130,7 @@ namespace SolarStation
             FillChart();
         }
 
-        
+
         private void OpenReport_Click(object sender, RoutedEventArgs e)
         {
             Report reportWindow = new Report();
@@ -202,15 +203,15 @@ namespace SolarStation
             //double kWh = (double)SolarPanelSelectedCompareItem.NominalPower_W / 1000;
             //PowerComparaTo.Text = kWh.ToString();
             //priceCompareTo.Text = SolarPanelSelectedCompareItem.Price__.ToString();
-            
+
         }
 
         public void Compare()
         {
-            if(SolarPanelSelected.NominalPower_W.Value> SolarPanelSelectedCompareItem.NominalPower_W.Value)
+            if (SolarPanelSelected.NominalPower_W.Value > SolarPanelSelectedCompareItem.NominalPower_W.Value)
             {
-                NomPowComparable.Background =  Brushes.Green;
-                NomPowCompareTo.Background= Brushes.DarkRed;
+                NomPowComparable.Background = Brushes.Green;
+                NomPowCompareTo.Background = Brushes.DarkRed;
             }
             else if (SolarPanelSelected.NominalPower_W.Value < SolarPanelSelectedCompareItem.NominalPower_W.Value)
             {
@@ -254,8 +255,8 @@ namespace SolarStation
 
         }
 
-       
-      
+
+
 
 
         public void CalculateForCompare()
@@ -309,6 +310,78 @@ namespace SolarStation
         #endregion
 
 
+        #region Predict and statistic
+
+        public void FillChartForDate()
+        {
+            Style styleLegend = new Style { TargetType = typeof(Control) };
+            styleLegend.Setters.Add(new Setter(Control.WidthProperty, 0d));
+            styleLegend.Setters.Add(new Setter(Control.HeightProperty, 0d));
+            StatisticChart.LegendStyle = styleLegend;
+
+            List<KeyValuePair<string, double>> KeyValue = new List<KeyValuePair<string, double>>();
+            DateTime startdate = startDate.SelectedDate.Value;
+            DateTime enddate = endDate.SelectedDate.Value;
+            double perDayPower = 0;
+            double perdaySave = 0;
+
+            if (startdate >= enddate)
+            {
+                MessageBox.Show("Дата початку не може перевищувати або співпадати з кінцевою датою.");
+            }
+
+
+            if (startdate.Year != 2019)
+            {
+                int years = 2019 - startdate.Year;
+                startdate = startdate.AddYears(years);
+            }
+            perDayPower = 0;
+            if (isTrackSun.IsChecked == true)
+            {
+                for (DateTime current = startdate; current <= enddate; current = current.AddDays(1))
+                {
+                    foreach (var time in sp.SolarInsalations.Where(x => x.Date == current))
+                    {
+                        double power = SolarPanelSelected.CalculatePower((int)time.ETRN, panelAmount);
+                        perDayPower += power;
+                        perdaySave += power;
+                    }
+                    KeyValue.Add(new KeyValuePair<string, double>(current.ToShortDateString(), perDayPower));
+                    perDayPower = 0;
+                }
+                ((LineSeries)StatisticChart.Series[0]).ItemsSource = KeyValue;
+            }
+            else
+            {
+                for (DateTime current = startdate; current <= enddate; current = current.AddDays(1))
+                {
+                    foreach (var time in sp.SolarInsalations.Where(x => x.Date == current))
+                    {
+                        double power = SolarPanelSelected.CalculatePower((int)time.ETR, panelAmount);
+                        perDayPower += power;
+                        perdaySave += power;
+                    }
+                    KeyValue.Add(new KeyValuePair<string, double>(current.ToShortDateString(), perDayPower));
+                    perDayPower = 0;
+                }
+                ((LineSeries)StatisticChart.Series[0]).ItemsSource = KeyValue;
+            }
+            //save.Text = perdaySave.ToString();
+        }
+        private void SetPeriodCalc_Click(object sender, RoutedEventArgs e)
+        {
+            if (endDate.SelectedDate == null || endDate.SelectedDate==startDate.SelectedDate)
+            {
+                MessageBox.Show("Виберіть кінцеву дату, відмінну від дати початку.");
+            }
+            else
+            FillChartForDate();
+        }
+
+
+        
+        #endregion
 
 
 
@@ -363,7 +436,7 @@ namespace SolarStation
                     predictGrid.Visibility = Visibility.Visible;
                     predictGrid.IsEnabled = true;
                     break;
-                
+
             }
         }
         private void ButtonOpenMenu_Click(object sender, RoutedEventArgs e)
@@ -406,5 +479,7 @@ namespace SolarStation
                 printDialog.PrintVisual(SaveCompare, "");
             }
         }
+
+       
     }
 }

@@ -32,7 +32,7 @@ namespace SolarStation
         {
             double Ko= 1.11;
             double Klost = 0.8;
-            double E = (double)(panelAmount * Insolation * (NominalPower_W / 1000) * Ko * Klost) / 24;
+            double E = (double)(panelAmount * Insolation * (NominalPower_W / 1000) * Ko * Klost *(PanelEfficiency/100)) / 24;
             return E;
         }
 
