@@ -330,6 +330,7 @@ namespace SolarStation
                 MessageBox.Show("Дата початку не може перевищувати або співпадати з кінцевою датою.");
             }
 
+            
 
             if (startdate.Year != 2019)
             {
@@ -367,7 +368,7 @@ namespace SolarStation
                 }
                 ((LineSeries)StatisticChart.Series[0]).ItemsSource = KeyValue;
             }
-            //save.Text = perdaySave.ToString();
+            energySum.Text = perdaySave.ToString("#.##");
         }
         private void SetPeriodCalc_Click(object sender, RoutedEventArgs e)
         {
@@ -376,11 +377,27 @@ namespace SolarStation
                 MessageBox.Show("Виберіть кінцеву дату, відмінну від дати початку.");
             }
             else
-            FillChartForDate();
+            {
+                FillChartForDate();
+                ResultTXT.Visibility = Visibility.Visible;
+            }
+            
         }
 
 
-        
+        private void ReportOpen_Click(object sender, RoutedEventArgs e)
+        {
+            if (endDate.SelectedDate == null)
+            {
+                MessageBox.Show("Виберіть кінцеву дату");
+            }
+            else
+            {
+                DateReportxaml dateReport = new DateReportxaml();
+                dateReport.Show();
+            }
+        }
+
         #endregion
 
 
@@ -466,10 +483,7 @@ namespace SolarStation
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        
 
         private void SaveComparisonBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -480,6 +494,6 @@ namespace SolarStation
             }
         }
 
-       
+        
     }
 }

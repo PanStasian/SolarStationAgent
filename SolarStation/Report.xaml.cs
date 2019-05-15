@@ -45,6 +45,8 @@ namespace SolarStation
             List<KeyValuePair<string, double>> KeyValue = new List<KeyValuePair<string, double>>();
             DateTime date = parent.DatePick.SelectedDate.Value;
             double perDayPower = 0;
+            double greenTax = 0.18;
+            double greenMoney=0;
 
             if (date.Year != 2019)
             {
@@ -71,23 +73,22 @@ namespace SolarStation
                 }
                 ((LineSeries)Chart.Series[0]).ItemsSource = KeyValue;
             }
-            //day.Text = perDayPower.ToString("#.##");
-
-
+            greenMoney = perDayPower * greenTax;
+            greenPrice.Text = greenMoney.ToString("#.##");
         }
 
 
         public void MakeReport()
         {
-            //parent.ShowInfo();
             Solar_Panels itemInf = parent.SolarPanelListCB.SelectedItem as Solar_Panels;
             headerReport.Text= itemInf.NamePanel.ToString();
             double kWh = (double)itemInf.NominalPower_W / 1000;
             V.Text = kWh.ToString();
             PerDay.Text = parent.day.Text;
-           //priceOne.Text= itemInf.Price__.ToString();
+            Start.Text = parent.DatePick.SelectedDate.Value.ToShortDateString();
             double paid = itemInf.Price__ * parent.PanelAmountSl.Value;
             priceSum.Text = paid.ToString();
+
             if (parent.isTrackSun.IsChecked==true)
             {
                 @checked.Visibility = Visibility.Visible;

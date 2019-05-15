@@ -411,10 +411,21 @@
             </ListView>
 
             <Button x:Name="SetPeriodCalc" Content="Розрахувати для дат"  Margin="300 70 0 0" VerticalAlignment="Top" HorizontalAlignment="Center" Click="SetPeriodCalc_Click"/>
-            <Button x:Name="reportOpen" Content="Зробити звіт"  Margin="0 70 30 0" VerticalAlignment="Top" HorizontalAlignment="Right" FontWeight="Normal" Background="#FF169908" BorderBrush="#FF169908"/>
+            <Button x:Name="reportOpen" Content="Зробити звіт"  Margin="0 70 30 0" VerticalAlignment="Top" HorizontalAlignment="Right" FontWeight="Normal" Background="#FF169908" BorderBrush="#FF169908" Click="ReportOpen_Click"/>
 
 
-            <DVC:Chart x:Name="StatisticChart" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="1005" Height="350" BorderThickness="0" BorderBrush="{x:Null}" ClipToBounds="True" SnapsToDevicePixels="False" Margin="60,0,0,0.4" >
+            <ListView x:Name="ResultTXT" VerticalAlignment="Top" Margin="80 120 30 0" HorizontalAlignment="Left" Visibility="Collapsed">
+                <ListViewItem >
+                    <StackPanel  Orientation="Horizontal">
+                        <TextBlock Text="Вироблено енергії за даний проміжок часу:  " FontSize="16"/>
+                        <TextBlock x:Name="energySum" FontSize="16" FontWeight="Bold" TextDecorations="Underline" />
+                        <TextBlock Text="   кВт*г" FontSize="16"/>
+                    </StackPanel>
+                </ListViewItem>
+            </ListView>
+            
+            
+            <DVC:Chart x:Name="StatisticChart" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="1005" Height="420" BorderThickness="0" BorderBrush="{x:Null}" ClipToBounds="True" SnapsToDevicePixels="False" Margin="60,0,0,0.4" >
                 <DVC:LineSeries Title=""
                 IndependentValueBinding="{Binding Key}"
                 DependentValueBinding="{Binding Value}" >

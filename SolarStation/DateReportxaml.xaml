@@ -7,10 +7,89 @@
         mc:Ignorable="d"
         Title="DateReportxaml" Height="540" Width="923.2" ResizeMode="NoResize"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
-        >
+        xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit">
     
     <Grid>
-        
+        <Grid x:Name="SaveReportPerDate">
+            <Grid Height="35" VerticalAlignment="Top" Background="#FF5658D7">
+                <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                    <ListViewItem >
+                        <StackPanel  Orientation="Horizontal">
+                            <TextBlock Text="Звіт роботи сонячної панелі  " Foreground="White"  FontSize="16"/>
+                            <TextBlock x:Name="headerReport" Foreground="White"  FontSize="16" FontWeight="Bold"/>
+                            <TextBlock Text="  за період з  " Foreground="White"  FontSize="16"/>
+                            <TextBlock x:Name="Start" Foreground="White" FontWeight="Bold"  FontSize="16"/>
+                            <TextBlock Text="  по  " Foreground="White"  FontSize="16"/>
+                            <TextBlock x:Name="End" Foreground="White" FontWeight="Bold" FontSize="16"/>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+            </Grid>
+
+            <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled"  HorizontalAlignment="Left" Margin="5,40,0,0" VerticalAlignment="Top">
+                <ListViewItem Height="50">
+                    <StackPanel Orientation="Horizontal" Height="36">
+                        <materialDesign:PackIcon Kind="Passport" Foreground="#FF5658D7" Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                        <TextBlock Text="Номінальна потужність панелі:" VerticalAlignment="Center" FontSize="15"/>
+                        <TextBox x:Name="V"  VerticalAlignment="Center" Margin="10,6,0,5" Width="43" FontSize="15" />
+                        <Label Content="кВт" VerticalAlignment="Center" FontSize="15" />
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem Height="50">
+                    <StackPanel Orientation="Horizontal" Height="36">
+                        <materialDesign:PackIcon Kind="SunMoonStars" Foreground="#FF5658D7" Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                        <TextBlock Text="Наявність сонячного трекера" VerticalAlignment="Center" FontSize="15"/>
+                        <materialDesign:PackIcon x:Name="checked" Kind="Check" Visibility="Collapsed" IsEnabled="False" Foreground="#FF22A500" Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                        <materialDesign:PackIcon x:Name="unchecked" Kind="Close" Visibility="Collapsed" IsEnabled="False" Foreground="#FFE20000" Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem Height="50">
+                    <StackPanel  Orientation="Horizontal" Height="36" >
+                        <materialDesign:PackIcon Kind="Counter" Foreground="#FF5658D7" Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                        <TextBlock Text="Кількість працюючих панелей:" VerticalAlignment="Center" FontSize="15"/>
+                        <TextBox x:Name="panelnumber"  VerticalAlignment="Center" Margin="10,6,0,5" FontSize="15" />
+                    </StackPanel>
+                </ListViewItem>
+            </ListView>
+
+            <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled"  HorizontalAlignment="Right" Margin="5,40,0,0" VerticalAlignment="Top" >
+                <ListViewItem Height="50">
+                    <StackPanel  Orientation="Horizontal" Height="36" >
+                        <materialDesign:PackIcon Kind="MoneyUsd" Foreground="#FF5658D7" Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                        <TextBlock Text="Ціна за всі панелі:" VerticalAlignment="Center" FontSize="15"/>
+                        <TextBox x:Name="priceSum"  VerticalAlignment="Center" Margin="10,6,0,5"  FontSize="15" />
+                        <Label Content="$" VerticalAlignment="Center" FontSize="15" />
+                    </StackPanel>
+                </ListViewItem>
+
+                <ListViewItem Height="50">
+                    <StackPanel  Orientation="Horizontal" Height="36" >
+                        <materialDesign:PackIcon Kind="Nature" Foreground="#FF5658D7" Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                        <TextBlock Text="Отримано по зеленому тарифу:" VerticalAlignment="Center" FontSize="15"/>
+                        <TextBox x:Name="greenPrice"  VerticalAlignment="Center" Margin="10,6,0,5"  FontSize="15" />
+                        <Label Content="€" VerticalAlignment="Center" FontSize="15" />
+                    </StackPanel>
+                </ListViewItem>
+
+                <ListViewItem Height="50">
+                    <StackPanel  Orientation="Horizontal" Height="36" >
+                        <materialDesign:PackIcon Kind="Electricity" Foreground="#FF5658D7" Width="20" Height="20" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                        <TextBlock Text="Вироблено енергії за проміжок часу:" VerticalAlignment="Center" FontSize="15"/>
+                        <TextBox x:Name="PerDay"  VerticalAlignment="Center" Margin="10,6,0,5" FontSize="15" />
+                        <Label Content="кВт*г" VerticalAlignment="Center" FontSize="15" />
+                    </StackPanel>
+                </ListViewItem>
+            </ListView>
+
+            <DVC:Chart x:Name="StatisticChart" HorizontalAlignment="Left" Margin="0 0 0 -10" VerticalAlignment="Bottom"  BorderThickness="0" BorderBrush="{x:Null}" ClipToBounds="True" SnapsToDevicePixels="False"  Height="350" Width="905" >
+                <DVC:LineSeries Title=""
+                IndependentValueBinding="{Binding Key}"
+                DependentValueBinding="{Binding Value}" >
+                </DVC:LineSeries>
+            </DVC:Chart>
+
+        </Grid>
+        <Button x:Name="SaveBtn" Content="Зберегти" Margin="380,170,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Click="SaveBtn_Click" Background="#FF169908" BorderBrush="#FF169908"/>
+
     </Grid>
 </Window>
