@@ -46,7 +46,7 @@ namespace SolarStation
             isTrackSun.Checked += CheckBox_Checked;
             isTrackSun.Unchecked += CheckBox_Unchecked;
         }
-
+        
         #region Main
         private void BindCB()
         {

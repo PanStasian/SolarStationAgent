@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SolarStation"
         mc:Ignorable="d"
-        Title="DateReportxaml" Height="540" Width="923.2" ResizeMode="NoResize"
+        Title="Звіт роботи СЕС" Height="540" Width="923.2" ResizeMode="NoResize"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit">
     

@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
-        Title="PanelInf" Height="540" Width="923.2" ResizeMode="NoResize">
+        Title="Звіт з роботи СЕС" Height="540" Width="923.2" ResizeMode="NoResize">
     <Grid>
         <Grid  x:Name="ReportGrid" >
         <Grid Height="35" VerticalAlignment="Top" Background="#FF5658D7">
