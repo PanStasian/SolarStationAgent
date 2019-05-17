@@ -85,9 +85,10 @@
 
             <Grid Height="55" VerticalAlignment="Top" Background="#FF5658D7">
                 <TextBlock Text="Розрахунок енергії, що генерується СЕС" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="Що я?" Margin="0 0 40 0" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="White"/>
                 <materialDesign:PopupBox HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="White" StaysOpen="False">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock x:Name="About" Width="500" Text=""/>
+                        <TextBlock x:Name="About" Width="400" TextWrapping="Wrap" Margin="10"/>
                     </StackPanel>
                 </materialDesign:PopupBox>
             </Grid>
